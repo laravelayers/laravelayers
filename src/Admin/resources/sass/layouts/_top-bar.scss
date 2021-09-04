@@ -1,0 +1,160 @@
+////
+/// @group layouts-admin-top-bar
+////
+
+/// Min height for admin bar
+/// @type Length
+$admin-topbar-min-height: rem-calc(52) !default;
+
+/// Background color for the admin bar. This color also cascades to menus within the admin bar.
+/// @type Color
+$admin-topbar-background: rgba($black, 0.97) !default;
+
+/// Default color for the admin bar links.
+/// @type Color
+$admin-topbar-anchor-color: $light-gray !default;
+
+/// Default color for the admin bar links on hover.
+/// @type Color
+$admin-topbar-anchor-color-hover: darken($admin-topbar-anchor-color, 15%) !default;
+
+/// Default color for the admin bar active links.
+/// @type Color
+$admin-topbar-anchor-color-active: $dark-gray !default;
+
+@mixin admintopbar-foundation-top-bar {
+  /// Background color for the top bar. This color also cascades to menus within the top bar.
+  /// @type Color
+  $_topbar-background: $topbar-background;
+  $topbar-background: $admin-topbar-background !global;
+
+  /// Background color submenus within the top bar. Usefull if $topbar-background is transparent.
+  /// @type Color
+  $_topbar-submenu-background: $topbar-submenu-background;
+  $topbar-submenu-background: $admin-topbar-background !global;
+
+  @include foundation-top-bar;
+
+  $topbar-background: $_topbar-background !global;
+  $topbar-submenu-background: $_topbar-submenu-background !global;
+}
+
+@mixin admintopbar-foundation-menu {
+  /// Text color of an active menu item.
+  /// @type Color
+  $_menu-item-color-active: $menu-item-color-active;
+  $menu-item-color-active: $admin-topbar-anchor-color-active !global;
+
+  /// Background color of an active menu item.
+  /// @type Color
+  $_menu-item-background-active: $menu-item-background-active;
+  $menu-item-background-active: transparent !global;
+
+  @include foundation-menu;
+
+  $menu-item-color-active: $_menu-item-color-active !global;
+  $menu-item-background-active: $_menu-item-background-active !global;
+}
+
+@mixin admintopbar-foundation-dropdown-menu {
+  /// Background color for top level items.
+  /// @type Color
+  $_dropdownmenu-background: $dropdownmenu-background;
+  $dropdownmenu-background: rgba($admin-topbar-background, 1) !global;
+
+  /// Background color for dropdowns.
+  /// @type Color
+  $_dropdownmenu-submenu-background: $_dropdownmenu-background;
+  $dropdownmenu-submenu-background: $dropdownmenu-background !global;
+
+  /// Sets dropdown menu arrow color for the top bar if arrow is used.
+  /// @type Color
+  $_dropdownmenu-arrow-color: $dropdownmenu-arrow-color;
+  $dropdownmenu-arrow-color: $dark-gray !global;
+
+  /// Border for dropdown sub-menus.
+  /// @type List
+  $_dropdownmenu-border: $dropdownmenu-border;
+  $dropdownmenu-border: 1px solid lighten($admin-topbar-background, 11%) !global;
+
+  @include foundation-dropdown-menu;
+
+  $dropdownmenu-background: $_dropdownmenu-background !global;
+  $dropdownmenu-submenu-background: $_dropdownmenu-submenu-background !global;
+  $dropdownmenu-arrow-color: $_dropdownmenu-arrow-color !global;
+  $dropdownmenu-border: $_dropdownmenu-border !global;
+}
+
+@mixin admintopbar-foundation-accordion-menu {
+  /// Sets accordion menu arrow color if arrow is used.
+  /// @type Color
+  $_accordionmenu-arrow-color: $accordionmenu-arrow-color;
+  $accordionmenu-arrow-color: $dark-gray !global;
+
+  @include foundation-accordion-menu;
+
+  $accordionmenu-arrow-color: $_accordionmenu-arrow-color !global;
+}
+
+.header, .main {
+  .admin-top-bar {
+    z-index: $offcanvas-overlay-zindex - 1;
+    border-bottom: $hr-border;
+    border-color: $light-gray;
+
+    &:hover,
+    &:focus {
+      z-index: $offcanvas-overlay-zindex + 1;
+    }
+
+    @include admintopbar-foundation-top-bar;
+
+    .top-bar {
+      z-index: $offcanvas-overlay-zindex + 1;
+      border: 0;
+      min-height: $admin-topbar-min-height;
+
+      .grid-container {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      a {
+        color: $admin-topbar-anchor-color;
+
+        &:hover,
+        &:focus {
+          color: $admin-topbar-anchor-color-hover;
+        }
+      }
+
+      .admin-top-bar-left, .admin-top-bar-right .auth {
+        & > ul.menu {
+          &, & > li > a {
+            background-color: transparent;
+          }
+        }
+      }
+
+      @include admintopbar-foundation-menu;
+
+      .menu {
+        .active > a {
+          :hover {
+            color: $admin-topbar-anchor-color-hover;
+          }
+        }
+      }
+
+      @include admintopbar-foundation-dropdown-menu;
+
+      .dropdown.menu {
+        .is-active > a {
+          color: $admin-topbar-anchor-color-hover;
+        }
+      }
+
+      @include admintopbar-foundation-accordion-menu;
+    }
+  }
+}

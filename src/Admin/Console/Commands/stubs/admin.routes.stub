@@ -1,0 +1,14 @@
+
+// Admin routes
+
+Route::adminResource('/', '\Laravelayers\Admin\Controllers\IndexController', ['only' => 'index']);
+
+Route::adminResource('auth/users', '\Laravelayers\Admin\Controllers\Auth\UserController');
+
+Route::adminResource('auth/users.actions', '\Laravelayers\Admin\Controllers\Auth\UserActionController');
+
+Route::adminResource('auth/roles', '\Laravelayers\Admin\Controllers\Auth\UserRoleController');
+
+Route::adminResource('auth/roles.users', '\Laravelayers\Admin\Controllers\Auth\RoleUserController');
+
+Route::adminResource('auth/roles.actions', '\Laravelayers\Admin\Controllers\Auth\UserRoleActionController');

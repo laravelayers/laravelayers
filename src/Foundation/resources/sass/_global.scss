@@ -1,0 +1,42 @@
+////
+/// @group global
+////
+
+/// The global width of the left cell of the main layout content.
+/// @type Number
+$layout-left-cell-width: rem-calc(250) !default;
+
+/// The global width of the right cell of the main layout content.
+/// @type Number
+$layout-right-cell-width: rem-calc(300) !default;
+
+// Default statuses.
+.is-status-opened {
+}
+
+.is-status-closed,
+.is-status-archived {
+  text-decoration: line-through;
+}
+
+.is-status-closed {
+  color: $dark-gray;
+}
+
+.is-status-closed:hover,
+.is-status-archived:hover {
+  text-decoration: inherit
+}
+
+// Preloader icon
+.preloader {
+  height: inherit;
+  min-height: inherit;
+
+  i.icon-spinner {
+    @extend .icon-spin;
+    @extend .icon-lg;
+
+    color: get-color('primary');
+  }
+}

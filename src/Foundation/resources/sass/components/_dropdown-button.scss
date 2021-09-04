@@ -1,0 +1,49 @@
+////
+/// @group dropdown-button
+////
+
+.dropdown-button {
+  position: relative;
+
+  .button-group {
+    &.hollow {
+      .button {
+        @extend .hollow;
+      }
+    }
+
+    .arrow-only {
+      flex: none;
+    }
+
+    &[disabled] {
+      .button {
+        @extend .disabled;
+        @extend .primary;
+      }
+    }
+  }
+
+  .button-group.expanded + .dropdown-pane {
+    width: 100%;
+  }
+
+  .dropdown-pane {
+    width: auto;
+    padding: 0;
+
+    .button {
+      @extend .clear;
+      @extend .expanded;
+      text-align: left;
+
+      &, &:hover, &:focus {
+        border-color: transparent !important;
+      }
+    }
+
+    .menu + .menu {
+      border-top: $hr-border;
+    }
+  }
+}

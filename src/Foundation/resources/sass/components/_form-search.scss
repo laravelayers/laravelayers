@@ -1,0 +1,37 @@
+////
+/// @group form-select
+////
+
+.form-search-wrapper {
+  position: relative;
+
+  &.active {
+    .input-group {
+      > :first-child {
+        &, &.input-group-button > * {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+
+      > :last-child {
+        &, &.input-group-button > * {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+    }
+
+    input, button {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  .dropdown-pane {
+    width: 100%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: 0;
+  }
+}

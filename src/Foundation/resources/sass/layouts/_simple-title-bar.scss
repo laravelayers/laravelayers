@@ -1,0 +1,29 @@
+////
+/// @group layouts-sidebar-title-bar
+////
+
+/// Default img height for the simple title bar.
+/// @type Length
+$simple-titlebar-img-height: rem-calc(16) !default;
+
+/// Default icons size for the simple title bar.
+/// @type Number
+$simple-titlebar-icons-size: $simple-titlebar-img-height !default;
+
+.header, .main {
+  .simple-title-bar {
+    @extend .title-bar;
+
+    img {
+      max-height: $simple-titlebar-img-height;
+    }
+
+    .icon {
+      font-size: $simple-titlebar-icons-size;
+    }
+
+    .simple-title-bar-right {
+      text-align: right;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+////
+/// @group layouts-sidebar-left
+////
+
+.sidebar-left > div {
+  // Only affects medium screens and larger
+  @include breakpoint(large) {
+    width: $layout-left-cell-width;
+  }
+
+  &.small {
+    width: calc(100px);
+  }
+}

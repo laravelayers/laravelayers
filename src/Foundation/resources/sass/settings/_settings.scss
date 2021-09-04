@@ -1,0 +1,65 @@
+//  Site settings
+//  -----------------------------
+//
+//  Table of Contents:
+//
+//  1. Global
+//  2. Icons
+//  3. Layouts Admin Menu Bar
+//  4. Layouts Admin Top Bar
+//  5. Layouts Header
+//  6. Layouts Simple Title Bar
+//  7. Layouts Simple Top Bar
+//  8. Layouts Top Bar
+
+// 1. Global
+// -------------
+
+$layout-left-cell-width: rem-calc(250);
+$layout-right-cell-width: rem-calc(300);
+
+// 2. Icons
+// -------------
+
+$icon-css-prefix: 'icon';
+$icon-palette: $foundation-palette;
+
+// 3. Layouts Admin Menu Bar
+// -------------
+
+$admin-menubar-background: lighten($black, 11%);
+$admin-menubar-font-color: $dark-gray;
+$admin-menubar-anchor-color: $light-gray;
+$admin-menubar-anchor-color-hover: darken($admin-menubar-anchor-color, 15%);
+$admin-menubar-anchor-color-active: $admin-menubar-font-color;
+
+// 4. Layouts Admin Top Bar
+// -------------
+
+$admin-topbar-min-height: rem-calc(52);
+$admin-topbar-background: lighten($black, 11%);
+$admin-topbar-anchor-color: $light-gray;
+$admin-topbar-anchor-color-hover: darken($admin-topbar-anchor-color, 15%);
+$admin-topbar-anchor-color-active: $dark-gray;
+
+// 5. Layouts Header
+// -------------
+
+$header-breadcrumbs-height: rem-calc(52);
+
+// 6. Layouts Simple Title Bar
+// -------------
+
+$simple-titlebar-img-height: rem-calc(16);
+$simple-titlebar-icons-size: $simple-titlebar-img-height;
+
+
+// 7. Layouts Simple Top Bar
+// -------------
+
+$simple-top-bar-img-height: rem-calc(16);
+
+// 8. Layouts Top Bar
+// -------------
+
+$top-bar-img-width: $layout-left-cell-width;

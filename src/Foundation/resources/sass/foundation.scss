@@ -1,0 +1,30 @@
+// Foundation for Sites
+@import '~foundation-sites/scss/foundation';
+
+@include foundation-everything($prototype: false);
+
+// if you won't be using old float grid, comment this out
+// and design your own auth pages
+//@include foundation-grid;
+
+// Global variables and styles
+@import "global";
+@import 'forms/forms';
+@import 'typography/typography';
+
+// Components
+@import "components/accordion";
+@import "components/button";
+@import "components/button-group";
+@import "components/form-datetime";
+@import "components/dropdown-button";
+@import "components/dropdown-menu";
+@import "components/form-search";
+@import "components/form-select";
+@import "components/form-editor";
+@import "components/menu";
+@import "components/pagination";
+@import "components/sticky";
+
+// Layouts
+@import "layouts/layouts";

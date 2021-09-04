@@ -1,0 +1,7 @@
+
+// Auth routes
+
+Route::authLayer();
+
+Route::get('/home', '\Laravelayers\Auth\Controllers\HomeController@index')->name('home')->middleware('verified');
+Route::post('/home', '\Laravelayers\Auth\Controllers\HomeController@update');

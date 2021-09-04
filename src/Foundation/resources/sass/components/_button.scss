@@ -1,0 +1,7 @@
+//@import '~foundation-sites/scss/components/button-group';
+
+.button {
+  .icon {
+    @extend .icon-fw;
+  }
+}

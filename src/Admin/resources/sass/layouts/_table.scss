@@ -1,0 +1,145 @@
+////
+/// @group layouts-admin-table
+////
+
+@mixin admintable-table {
+  /// Default scale for darkening the striped table rows and the table border.
+  /// @type Number
+  $_table-color-scale: $table-color-scale;
+  $table-color-scale: 10% !global;
+
+  /// Default style for table border.
+  /// @type List
+  $_table-border: $table-border;
+  $table-border: 1px solid smart-scale($table-background, $table-color-scale) !global;
+
+  /// Default scale for darkening the table rows on hover.
+  /// @type Number
+  $_table-hover-scale: $table-hover-scale;
+  $table-hover-scale: 4% !global;
+
+  /// Default color of standard rows on hover.
+  /// @type List
+  $_table-row-hover: $table-row-hover;
+  $table-row-hover: darken($table-background, $table-hover-scale) !global;
+
+  /// Default color of striped rows on hover.
+  /// @type List
+  $_table-row-stripe-hover: $table-row-stripe-hover;
+  $table-row-stripe-hover: $table-row-hover !global;
+
+  /// Default background color for striped rows.
+  /// @type Color
+  $_table-striped-background: $table-striped-background;
+  $table-striped-background: smart-scale($table-background, $table-color-scale) !global;
+
+  /// Default color for header background.
+  /// @type Color
+  $_table-head-background: $table-head-background;
+  $table-head-background: smart-scale($table-background, $table-color-scale / 2) !global;
+
+  /// Default color of header rows on hover.
+  /// @type List
+  $_table-head-row-hover: $table-head-row-hover;
+  $table-head-row-hover: darken($table-head-background, $table-hover-scale) !global;
+
+  /// Default color for footer background.
+  /// @type Color
+  $_table-foot-background: $table-foot-background;
+  $table-foot-background: smart-scale($table-background, $table-color-scale) !global;
+
+  /// Default color of footer rows on hover.
+  /// @type List
+  $_table-foot-row-hover: $table-foot-row-hover;
+  $table-foot-row-hover: darken($table-foot-background, $table-hover-scale) !global;
+
+  @include table($table-stripe);
+  @include table-scroll;
+  @include table-hover;
+  //@include table-stack($show-header-for-stacked);
+
+  $table-color-scale: $_table-color-scale !global;
+  $table-border: $_table-border !global;
+  $table-hover-scale: $_table-hover-scale !global;
+  $table-row-hover: $_table-row-hover !global;
+  $table-row-stripe-hover: $_table-row-stripe-hover !global;
+  $table-striped-background: $_table-striped-background !global;
+  $table-head-background: $_table-head-background !global;
+  $table-head-row-hover: $_table-head-row-hover !global;
+  $table-foot-background: $_table-foot-background !global;
+  $table-foot-row-hover: $_table-foot-row-hover !global;
+}
+
+.admin-table {
+  @include admintable-table;
+
+  thead th, tbody td {
+    vertical-align: top;
+
+    small {
+      color: $dark-gray;
+    }
+  }
+
+  tbody {
+    .cropped-text {
+      border-bottom: 1px dotted;
+      cursor: pointer;
+    }
+
+    .expand-text {
+      display: none;
+    }
+
+    .expanded-text.is-hidden + .expand-text {
+      display: inline;
+    }
+
+    .button {
+      &, &:hover, &:focus {
+        @extend .hollow;
+      }
+    }
+
+    input:not([type="checkbox"]):not([type="radio"]), select, textarea {
+      min-width: 105px;
+      margin-bottom: 0;
+    }
+
+    td {
+      .form-error.is-visible {
+        display: none !important;
+      }
+    }
+  }
+
+  .button {
+    @extend .small;
+  }
+
+  .dropdown-button {
+    position: static;
+
+    .button-group {
+      flex-wrap: nowrap;
+      margin-bottom: 0;
+
+      &.expanded {
+        + .dropdown-pane {
+          width: auto;
+        }
+      }
+
+      .button {
+        @extend .small;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .thumbnail {
+    max-height: 100px;
+    margin-bottom: unset;
+    box-shadow: unset;
+  }
+}

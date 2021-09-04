@@ -1,0 +1,64 @@
+'use strict';
+
+import $ from 'jquery';
+
+/**
+ * DummyName plugin.
+ * @module foundation.dummyName
+ */
+class DummyName {
+    /**
+     * Creates a new instance of DummyName.
+     * @class
+     * @name DummyName
+     * @fires DummyName#init
+     * @param {Object} element - jQuery object to add the trigger to.
+     * @param {Object} options - Overrides to the default plugin settings.
+     */
+    constructor(element, options = {}) {
+        this.$element = element;
+        this.options  = $.extend(true, {}, DummyName.defaults, this.$element.data(), options);
+
+        this.className = 'DummyName'; // ie9 back compat
+
+        this._init();
+
+        Foundation.registerPlugin(this, this.className);
+    }
+
+    /**
+     * Initializes the DummyName plugin.
+     * @private
+     */
+    _init() {
+        //
+
+        this._events();
+    }
+
+    /**
+     * Initializes events for DummyName.
+     * @private
+     */
+    _events() {
+        //
+    }
+
+    /**
+     * Destroys an instance of DummyName.
+     * @function
+     */
+    _destroy() {
+        Foundation.unregisterPlugin(this, this.className);
+    }
+}
+
+/**
+ * Default settings for plugin
+ */
+DummyName.defaults = {
+    //
+};
+
+export {DummyName};
+Foundation.plugin(DummyName, 'DummyName');

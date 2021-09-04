@@ -1,0 +1,94 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyFullDecoratorClass;
+use DummyFullCollectionDecoratorClass;
+use DummyFullRepositoryClass;
+use DummyFullBaseClass;
+use Illuminate\Http\Request;
+use Laravelayers\Foundation\Decorators\CollectionDecorator;
+
+class DummyClass extends DummyBaseClass
+{
+    /**
+     * Create a new DummyClass instance.
+     *
+     * @param DummyRepositoryClass $DummyRepositoryVariable
+     */
+    public function __construct(DummyRepositoryClass $DummyRepositoryVariable)
+    {
+        $this->repository = $DummyRepositoryVariable;
+
+        $this->setDecorators([
+            DummyDecoratorClass::class,
+            DummyCollectionDecoratorClass::class,
+        ]);
+    }
+
+    /**
+     * Fill the resource instance with values.
+     *
+     * @param Request $request
+     * @return \Laravelayers\Foundation\Decorators\DataDecorator|DummyDecoratorClass
+     */
+    public function fill(Request $request)
+    {
+        if ($request->has('id')) {
+            return ($item = $this->find($request->get('id')))->forget($item->getKeyName());
+        }
+
+        return $this->repository->fill();
+    }
+
+    /**
+     * Find the resource by the specified ID.
+     *
+     * @param int $id
+     * @return \Laravelayers\Foundation\Decorators\DataDecorator|DummyDecoratorClass
+     */
+    public function find($id)
+    {
+        return $this->repository->findOrFail($id);
+    }
+
+    /**
+     * Paginate resources.
+     *
+     * @param Request $request
+     * @return \Laravelayers\Pagination\Decorators\PaginatorDecorator|CollectionDecorator|DummyCollectionDecoratorClass
+     */
+    public function paginate(Request $request)
+    {
+        $this->search($request)
+            ->sort($request)
+            ->whereStatus();
+
+        return ($ids = $this->getFormElements($request, 'id'))
+            ? $this->repository->findOrFail($ids)
+            : $this->repository->paginate($this->getPerPage($request));
+    }
+
+    /**
+     * Update multiple resources in the repository.
+     *
+     * @param CollectionDecorator|DummyCollectionDecoratorClass $items
+     * @return CollectionDecorator|DummyCollectionDecoratorClass
+     */
+    public function updateMultiple(CollectionDecorator $items)
+    {
+        $request = $items->getElements()->getRequest();
+
+        foreach($items as $key => $item) {
+            $item = $items->setSorting($this->getFormElements($request, 'id')[$key]);
+
+            if ($request->get('pattern')) {
+                $item->replaceElements($request->pattern, $request->replacement);
+            }
+
+            $this->repository->save($item);
+        }
+
+        return $items;
+    }
+}

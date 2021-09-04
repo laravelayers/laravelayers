@@ -1,0 +1,26 @@
+//@import '../../../../../../node_modules/foundation-sites/scss/typography/base';
+
+strong, b {
+  & > code {
+    font-weight: bold;
+  }
+}
+
+a {
+  & > code {
+    color: inherit;
+  }
+}
+
+code {
+  border-radius: $global-radius;
+}
+
+pre {
+  & > code {
+    display: block;
+    margin-bottom: $paragraph-margin-bottom;
+    overflow-x: auto;
+    padding: 1em;
+  }
+}

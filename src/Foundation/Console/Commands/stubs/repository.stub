@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyFullModelClass;
+use DummyFullBaseClass;
+
+class DummyClass extends DummyBaseClass
+{
+    /**
+     * Create a new DummyClass instance.
+     *
+     * @param DummyModelClass $DummyModelVariable
+     */
+    public function __construct(DummyModelClass $DummyModelVariable)
+    {
+        $this->model = $DummyModelVariable;
+    }
+}

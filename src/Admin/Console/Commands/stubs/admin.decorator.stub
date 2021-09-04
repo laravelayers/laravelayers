@@ -1,0 +1,63 @@
+<?php
+
+namespace DummyNamespace;
+
+use Laravelayers\Admin\Decorators\DataDecorator as TraitDataDecorator;
+use Laravelayers\Contracts\Admin\Decorators\DataDecorator as DataDecoratorContract;
+use DummyFullBaseClass;
+
+class DummyClass extends DummyBaseClass implements DataDecoratorContract
+{
+    use TraitDataDecorator;
+
+    /**
+     * Initialize form elements.
+     *
+     * @return array
+     */
+    protected function initElements()
+    {
+        return $this->getDefaultElements();
+    }
+
+    /**
+     * Initialize the form element for actions.
+     *
+     * @return array
+     */
+    protected function initActionsElement()
+    {
+        return $this->getDefaultActions(['show', 'create']);
+    }
+
+    /**
+     * Initialize form elements for editing multiple collection elements.
+     *
+     * @return array
+     */
+    protected function initMultipleElements()
+    {
+        return array_keys($this->initElements());
+    }
+
+    /**
+     * Get the sort order.
+     *
+     * @return int|null
+     */
+    public function getSorting()
+    {
+        return $this->get($this->getSortKey());
+    }
+
+    /**
+     * Set the sort order.
+     *
+     * @param int|string $value
+     * @return $this
+     */
+    public function setSorting($value)
+    {
+        return !is_null($this->getSorting()) ? $this->put($this->getSortKey(), (int) $value) : $this;
+    }
+}

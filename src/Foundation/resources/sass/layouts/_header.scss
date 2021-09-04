@@ -1,0 +1,38 @@
+////
+/// @group layouts-header
+////
+
+/// Min height for breadcrumbs in header
+/// @type Length
+$header-breadcrumbs-height: rem-calc(52) !default;
+
+.header {
+  & + .main {
+    margin-top: $global-margin;
+  }
+
+  nav {
+    & > span {
+      display: block;
+      border-bottom: $hr-border;
+      border-color: $light-gray;
+    }
+
+    .grid-x {
+      min-height: $header-breadcrumbs-height;
+
+      .breadcrumbs {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .header-bar {
+    margin-top: $global-margin;
+    margin-bottom: -$global-margin;
+
+    ul.menu {
+      margin-left: -$global-margin;
+    }
+  }
+}

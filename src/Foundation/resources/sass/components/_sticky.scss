@@ -1,0 +1,8 @@
+//@import '~foundation-sites/scss/components/sticky';
+
+.sticky {
+  &.is-stuck, &.is-anchored.is-at-bottom {
+    max-height: calc(100vh);
+    overflow-y: auto;
+  }
+}

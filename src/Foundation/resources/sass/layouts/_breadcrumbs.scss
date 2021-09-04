@@ -1,0 +1,50 @@
+////
+/// @group layouts-breadcrumbs
+////
+
+.breadcrumbs {
+  padding: $global-padding 0;
+
+  .icon {
+    @extend .icon-fw;
+  }
+
+  .dropdown.menu {
+    display: inline;
+
+    .menu-text {
+      font-weight: $global-weight-normal;
+    }
+
+    > li {
+      margin-#{$global-left}: -(($breadcrumbs-item-margin)+0.25rem);
+      margin-#{$global-right}: -0.25rem;
+    }
+
+    > li > a {
+      display: inline;
+    }
+
+    li > a {
+      background: transparent;
+      color: $breadcrumbs-item-color;
+    }
+
+    li li {
+      &:not(:last-child)::after {
+        margin: 0;
+        content: '';
+      }
+    }
+
+    > li.is-dropdown-submenu-parent.disabled > a::after { // sass-lint:disable-line no-qualifying-elements
+      @include css-triangle($dropdownmenu-arrow-size, $breadcrumbs-item-color-disabled, down);
+    }
+  }
+
+  li > a:not([href]) {
+    color: inherit !important;
+    text-decoration: none;
+    cursor: inherit;
+  }
+}

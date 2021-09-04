@@ -1,0 +1,160 @@
+////
+/// @group layouts-admin-menu-bar
+////
+
+/// Background color for the admin menu. This color also cascades to menus within the admin menu.
+/// @type Color
+$admin-menubar-background: rgba($black, 0.97) !default;
+
+/// Default color for the admin bar text.
+/// @type Color
+$admin-menubar-font-color: $dark-gray !default;
+
+/// Default color for the admin menu  links.
+/// @type Color
+$admin-menubar-anchor-color: $light-gray !default;
+
+/// Default color for the admin menu  links on hover.
+/// @type Color
+$admin-menubar-anchor-color-hover: darken($admin-menubar-anchor-color, 15%) !default;
+
+/// Default color for the admin menu active links.
+/// @type Color
+$admin-menubar-anchor-color-active: $admin-menubar-font-color !default;
+
+@mixin admin-menubar-menu {
+  /// Text color of an active menu item.
+  /// @type Color
+  $_menu-item-color-active: $menu-item-color-active;
+  $menu-item-color-active: $admin-menubar-anchor-color-active !global;
+
+  /// Background color of an active menu item.
+  /// @type Color
+  $_menu-item-background-active: $menu-item-background-active;
+  $menu-item-background-active: transparent !global;
+
+  @include foundation-menu;
+
+  $menu-item-color-active: $_menu-item-color-active !global;
+  $menu-item-background-active: $_menu-item-background-active !global;
+}
+
+@mixin admin-menubar-dropdown-menu {
+  /// Background color for top level items.
+  /// @type Color
+  $_dropdownmenu-background: $dropdownmenu-background;
+  $dropdownmenu-background: $admin-menubar-background !global;
+
+  /// Background color for dropdowns.
+  /// @type Color
+  $_dropdownmenu-submenu-background: $_dropdownmenu-background;
+  $dropdownmenu-submenu-background: $dropdownmenu-background !global;
+
+  /// Sets dropdown menu arrow color for the top bar if arrow is used.
+  /// @type Color
+  $_dropdownmenu-arrow-color: $dropdownmenu-arrow-color;
+  $dropdownmenu-arrow-color: $admin-menubar-font-color !global;
+
+  /// Border for dropdown sub-menus.
+  /// @type List
+  $_dropdownmenu-border: $dropdownmenu-border;
+  $dropdownmenu-border: 1px solid $black !global;
+
+  /// Text color of an active dropdown menu item. Explicit override for menu defaults
+  /// @type Color
+  $_dropdown-menu-item-color-active: $dropdown-menu-item-color-active;
+  $dropdown-menu-item-color-active: $admin-menubar-anchor-color-hover !global;
+
+  @include foundation-dropdown-menu;
+
+  $dropdownmenu-background: $_dropdownmenu-background !global;
+  $dropdownmenu-submenu-background: $_dropdownmenu-submenu-background !global;
+  $dropdownmenu-arrow-color: $_dropdownmenu-arrow-color !global;
+  $dropdownmenu-border: $_dropdownmenu-border !global;
+  $dropdown-menu-item-color-active: $_dropdown-menu-item-color-active;
+}
+
+@mixin admin-menubar-accordion-menu {
+  /// Sets accordion menu arrow color if arrow is used.
+  /// @type Color
+  $_accordionmenu-arrow-color: $accordionmenu-arrow-color;
+  $accordionmenu-arrow-color: $admin-menubar-font-color !global;
+
+  @include foundation-accordion-menu;
+
+  $accordionmenu-arrow-color: $_accordionmenu-arrow-color !global;
+}
+
+@mixin admin-menubar-off-canvas-base {
+  /// Background color of an off-canvas panel.
+  /// @type Color
+  $_offcanvas-background: $offcanvas-background;
+  $offcanvas-background: $admin-menubar-background !global;
+
+  @include off-canvas-base;
+
+  $offcanvas-background: $_offcanvas-background !global;
+}
+
+.admin-menu-bar {
+  &.off-canvas {
+    @include admin-menubar-off-canvas-base;
+
+    .header {
+      .breadcrumbs {
+        li {
+          color: $admin-menubar-font-color;
+
+          a {
+            color: $admin-menubar-anchor-color;
+          }
+        }
+      }
+
+      nav {
+        & > span {
+          border-color: lighten($admin-menubar-background, 15%);
+        }
+      }
+
+      margin-bottom: 0;
+    }
+
+    a, .close-button {
+      color: $admin-menubar-anchor-color;
+
+      &:hover {
+        color: $admin-menubar-anchor-color-hover;
+      }
+    }
+
+    @include admin-menubar-menu;
+
+    .menu {
+      color: $admin-menubar-font-color;
+
+      &:not(.nested) {
+        padding-top: $global-padding;
+        padding-bottom: $global-padding;
+
+        &:not(:last-child) {
+          border-bottom: $hr-border;
+          border-color: lighten($admin-menubar-background, 15%);
+        }
+      }
+
+      .icon {
+        margin-right: $global-margin / 2;
+      }
+    }
+
+    .auth {
+      border-bottom: $hr-border;
+      border-color: lighten($admin-menubar-background, 15%);
+    }
+
+    @include admin-menubar-dropdown-menu;
+
+    @include admin-menubar-accordion-menu;
+  }
+}

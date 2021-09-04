@@ -1,0 +1,9 @@
+////
+/// @group layouts-main
+////
+
+.main {
+  &.full > .grid-container:first-child > .grid-x {
+    min-height: calc(100vh);
+  }
+}

@@ -1,0 +1,29 @@
+<?php
+
+return [
+
+    'menu' => [
+        //'name' => ''
+    ],
+
+    'columns' => [
+        //'name' => 'Name'
+    ],
+
+    'elements' => [
+        //'name_label' => 'Label text',
+        //'name_placeholder' => 'Placeholder text',
+        //'name_help' => 'Help text.',
+        //'name_tooltip' => 'Tooltip text.',
+        //'name_error' => 'Javascript error text for :attribute.'
+    ],
+
+    'actions' => [
+        //'edit' => 'Edit name'
+    ],
+
+    'errors' => [
+        //'name_exists' => 'The name entered already exists.'
+    ]
+
+];

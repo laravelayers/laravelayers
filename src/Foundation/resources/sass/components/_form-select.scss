@@ -1,0 +1,15 @@
+////
+/// @group form-select
+////
+
+.form-select-wrapper {
+  li.is-subtree-parent > a {
+    label {
+      font-weight: $global-weight-bold;
+    }
+  }
+
+  li.active > a, li.is-active > a {
+    background: inherit;
+  }
+}

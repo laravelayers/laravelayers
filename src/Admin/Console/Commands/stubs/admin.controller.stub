@@ -1,0 +1,202 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyFullServiceClass;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use DummyFullBaseClass;
+use Laravelayers\Previous\PreviousUrl;
+
+class DummyClass extends DummyBaseClass
+{
+    /**
+     * Create a new DummyClass instance.
+     *
+     * @param DummyServiceClass $DummyServiceVariable
+     */
+    public function __construct(DummyServiceClass $DummyServiceVariable)
+    {
+        $this->authorizeResource();
+
+        $this->service = $DummyServiceVariable
+            ->setSorting('id', 'desc')
+            ->setPerPage(25);
+    }
+
+    /**
+     * Initialize menu item for the admin menu bar.
+     *
+     * @return array
+     */
+    protected function initMenu()
+    {
+        return [
+            'route' => 'admin.DummyRouteName.index',
+            'name' => trans('admin/DummyRoutePath.menu.name'),
+            'parent' => '',
+            'icon' => ''
+        ];
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function index(Request $request)
+    {
+        $items = $this->service->paginate($request);
+
+        return view("admin::layouts.action.index", compact('items'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function create(Request $request)
+    {
+        $item = $this->service->fill($request);
+
+        return view('admin::layouts.action.create', compact('item'));
+    }
+
+    /**
+     * Store a newly created resource in the repository.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $item = $this->service->fill($request);
+
+        $item->getElements()->validate();
+
+        $item = $this->service->save($item);
+
+        return redirect()->route('admin.DummyRouteName.edit', array_merge([
+            $item->getKey()
+        ], PreviousUrl::getQuery()));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        return Route::has('DummyRouteName.show')
+            ? redirect()->route('DummyRouteName.show', [$id])
+            : $this->edit($id);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\View\View
+     */
+    public function edit($id)
+    {
+        $item = $this->service->find($id);
+
+        return view('admin::layouts.action.edit', compact('item'));
+    }
+
+    /**
+     * Update the specified resource in the repository.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update($id)
+    {
+        $item = $this->service->find($id);
+
+        $item->getElements()->validate();
+
+        $this->service->save($item);
+
+        return back();
+    }
+
+    /**
+     * Remove the specified resource from the repository.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        $this->service->destroy($id);
+
+        return back();
+    }
+
+    /**
+     * Show the form for editing multiple resources.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function editMultiple(Request $request)
+    {
+        $items = $this->service->paginate($request);
+
+        return view('admin::layouts.action.multiple', compact('items'));
+    }
+
+    /**
+     * Update multiple resources in the repository.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateMultiple(Request $request)
+    {
+        $items = $this->service->paginate($request);
+
+        $items->getElements()->validate($items);
+
+        $this->service->updateMultiple($items);
+
+        return back();
+    }
+
+    /**
+     * Show the form for delete multiple resources.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function deleteMultiple(Request $request)
+    {
+        $items = $this->service->paginate($request);
+
+        return view('admin::layouts.action.multiple', compact('items'));
+    }
+
+    /**
+     * Remove multiple resources from the repository.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroyMultiple(Request $request)
+    {
+        $items = $this->service->paginate($request);
+
+        $items->getElements()->validate();
+
+        $this->service->destroy($items->getKeys());
+
+        return back();
+    }
+}

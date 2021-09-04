@@ -1,0 +1,7 @@
+//@import '../../../../../../node_modules/foundation-sites/scss/forms/label';
+
+nobr {
+  input + label {
+    white-space: normal;
+  }
+}

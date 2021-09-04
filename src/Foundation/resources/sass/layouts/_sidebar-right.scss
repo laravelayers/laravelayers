@@ -1,0 +1,11 @@
+////
+/// @group layouts-sidebar-right
+////
+
+.sidebar-right > div {
+  width: $layout-right-cell-width;
+
+  @include breakpoint(medium down) {
+    margin: 0 auto;
+  }
+}

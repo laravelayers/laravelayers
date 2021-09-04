@@ -1,0 +1,28 @@
+//@import '~foundation-sites/scss/components/button-group';
+
+@mixin button-group-expanded {
+  .button {margin-right: $buttongroup-spacing;}
+  .button:last-child {margin-#{$global-right}: 0;}
+}
+
+.button-group {
+  &.expanded {
+    @include button-group-expanded;
+  }
+
+  &.expanded-for-large {
+    @include breakpoint(large) {
+      @include button-group-expand;
+
+      @include button-group-expanded;
+    }
+  }
+
+  &.expanded-for-medium {
+    @include breakpoint(medium) {
+      @include button-group-expand;
+
+      @include button-group-expanded;
+    }
+  }
+}

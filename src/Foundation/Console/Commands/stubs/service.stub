@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyFullRepositoryClass;
+use Laravelayers\Foundation\Services\Service;
+
+class DummyClass extends Service
+{
+    /**
+     * Create a new DummyClass instance.
+     *
+     * @param DummyRepositoryClass $DummyRepositoryVariable
+     */
+    public function __construct(DummyRepositoryClass $DummyRepositoryVariable)
+    {
+        $this->repository = $DummyRepositoryVariable;
+    }
+}

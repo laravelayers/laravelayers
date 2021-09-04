@@ -1,0 +1,17 @@
+////
+/// @group datetime-picker
+////
+
+body {
+  .flatpickr-days .flatpickr-day.selected,
+  .flatpickr-days .flatpickr-day.selected:hover {
+    background-color: get-color('primary');
+    border-color: get-color('primary');
+  }
+
+  .flatpickr-calendar {
+    -webkit-box-shadow: 1px 0 0 $medium-gray, -1px 0 0 $medium-gray, 0 1px 0 $medium-gray, 0 -1px 0 $medium-gray, 0 3px 13px rgba(0,0,0,0.08);
+    box-shadow: 1px 0 0 $medium-gray, -1px 0 0 $medium-gray, 0 1px 0 $medium-gray, 0 -1px 0 $medium-gray, 0 3px 13px rgba(0,0,0,0.08);
+    border-radius: $global-radius;
+  }
+}

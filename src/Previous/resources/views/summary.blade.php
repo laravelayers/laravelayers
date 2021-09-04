@@ -1,0 +1,1 @@
+<p>@lang('pagination::pagination.summary', ['total' => $items->total(), 'form' => $items->firstItem(), 'to' => $items->lastItem()])</p>

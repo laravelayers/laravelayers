@@ -1,0 +1,9 @@
+//@import '~foundation-sites/scss/components/dropdown-menu';
+
+.dropdown.menu {
+  .is-dropdown-submenu {
+    border-radius: $global-radius;
+
+    a span {padding-right: nth($global-menu-padding, 2)}
+  }
+}

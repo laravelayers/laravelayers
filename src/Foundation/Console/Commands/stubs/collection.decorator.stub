@@ -1,0 +1,10 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyFullBaseClass;
+
+class DummyClass extends DummyBaseClass
+{
+    //
+}

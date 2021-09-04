@@ -1,0 +1,26 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyFullDecoratorClass;
+use DummyFullCollectionDecoratorClass;
+use DummyFullRepositoryClass;
+use DummyFullBaseClass;
+
+class DummyClass extends DummyBaseClass
+{
+    /**
+     * Create a new DummyClass instance.
+     *
+     * @param DummyRepositoryClass $DummyRepositoryVariable
+     */
+    public function __construct(DummyRepositoryClass $DummyRepositoryVariable)
+    {
+        $this->repository = $DummyRepositoryVariable;
+
+        $this->setDecorators([
+            DummyDecoratorClass::class,
+            DummyCollectionDecoratorClass::class
+        ]);
+    }
+}

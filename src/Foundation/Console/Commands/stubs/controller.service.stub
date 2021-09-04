@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyFullServiceClass;
+use DummyFullBaseClass;
+
+class DummyClass extends DummyBaseClass
+{
+    /**
+     * Create a new DummyClass instance.
+     *
+     * @param DummyServiceClass $DummyServiceVariable
+     */
+    public function __construct(DummyServiceClass $DummyServiceVariable)
+    {
+        $this->service = $DummyServiceVariable;
+    }
+}

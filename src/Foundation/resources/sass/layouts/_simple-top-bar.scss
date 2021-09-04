@@ -1,0 +1,38 @@
+////
+/// @group layouts-simple-top-bar
+////
+
+/// Default img height for the simple top bar.
+/// @type Length
+$simple-topbar-img-height: rem-calc(16) !default;
+
+.header, .main {
+  .simple-top-bar {
+    @extend .top-bar;
+
+    img {
+      max-height: $simple-topbar-img-height;
+    }
+
+    @include breakpoint(small down) {
+      padding: 0 !important;
+    }
+
+    .simple-top-bar-left {
+      padding-top: $topbar-padding;
+      padding-bottom: $topbar-padding;
+    }
+
+    .simple-top-bar-right {
+      @include breakpoint(medium) {
+        text-align: right;
+      }
+
+      @include breakpoint(small down) {
+        .menu:first-child {
+          margin-left: -(nth($global-menu-padding, 2));
+        }
+      }
+    }
+  }
+}

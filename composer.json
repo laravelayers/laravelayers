@@ -1,0 +1,55 @@
+{
+    "name": "laravelayers/laravelayers",
+    "description": "Layered structure for the Laravel: services, decorators, repositories. Foundation frontend framework. Forms. Navigation. User actions and roles. Admin panel.",
+    "keywords": ["framework", "laravel", "admin"],
+    "license": "MIT",
+    "homepage": "https://laravelayers.com",
+    "support": {
+        "issues": "https://github.com/laravelayers/laravelayers/issues",
+        "source": "https://github.com/laravelayers/laravelayers"
+    },
+    "authors": [
+        {
+            "name": "Grigory Kovalev",
+            "email": "grigorykov@gmail.com"
+        }
+    ],
+    "require": {
+        "intervention/image": "^2.5",
+        "laravel/framework": "5.7.*",
+        "propaganistas/laravel-phone": "^4.2"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "^1.4",
+        "mockery/mockery": "^1.0",
+        "nunomaduro/collision": "^2.0",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravelayers\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laravelayers\\Auth\\AuthServiceProvider",
+                "Laravelayers\\Admin\\AdminServiceProvider",
+                "Laravelayers\\Date\\DateServiceProvider",
+                "Laravelayers\\Form\\FormServiceProvider",
+                "Laravelayers\\Foundation\\FoundationServiceProvider",
+                "Laravelayers\\Navigation\\NavigationServiceProvider",
+                "Laravelayers\\Pagination\\PaginationServiceProvider",
+                "Laravelayers\\Previous\\PreviousServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

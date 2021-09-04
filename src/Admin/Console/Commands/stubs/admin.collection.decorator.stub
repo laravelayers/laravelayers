@@ -1,0 +1,58 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyFullBaseClass;
+
+class DummyClass extends DummyBaseClass
+{
+    /**
+     * Initialize the columns.
+     *
+     * @return array
+     */
+    protected function initColumns()
+    {
+        return $this->getDefaultColumns();
+    }
+
+    /**
+     * Initialize the filter.
+     *
+     * @return array
+     */
+    protected function initFilter()
+    {
+        return [];
+    }
+
+    /**
+     * Initialize the search options.
+     *
+     * @return array
+     */
+    protected function initSearch()
+    {
+        return parent::initSearch();
+    }
+
+    /**
+     * Initialize the quick filter.
+     *
+     * @return array
+     */
+    protected function initQuickFilter()
+    {
+        return [];
+    }
+
+    /**
+     * Initialize form elements.
+     *
+     * @return mixed
+     */
+    protected function initElements()
+    {
+        return $this->getDefaultElements();
+    }
+}

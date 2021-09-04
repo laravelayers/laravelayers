@@ -1,0 +1,25 @@
+////
+/// @group layouts-icon
+////
+
+// CSS prefix name for icons.
+$icon-css-prefix: 'icon' !default;
+
+// CSS class name for icons.
+$icon-css-name: $icon-css-prefix !default;
+
+/// Coloring classes. A map of classes to output in your CSS, like `.secondary`, `.success`, and so on.
+/// @type Map
+$icon-palette: $foundation-palette !default;
+
+// Alias for Font Awesome
+.#{$icon-css-name} {
+  @extend %fa-icon;
+  @extend .fas;
+
+  @each $name, $color in $icon-palette {
+    &.#{$name} {
+      color: $color;
+    }
+  }
+}

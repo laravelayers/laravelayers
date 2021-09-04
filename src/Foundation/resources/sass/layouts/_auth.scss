@@ -1,0 +1,39 @@
+////
+/// @group layouts-auth
+////
+
+.auth {
+  img {
+    position: absolute;
+    top: 0;
+    left: auto;
+    border-radius: 50%;
+    max-height: 30px;
+  }
+
+  img + span {
+    display: inline-block;
+    padding-left: 40px;
+
+    i {
+      display: none;
+    }
+  }
+
+  li {
+    ul {
+      img {
+        display: none
+      }
+
+      img + span {
+        display: inline;
+        padding-left: 0;
+
+        i {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
