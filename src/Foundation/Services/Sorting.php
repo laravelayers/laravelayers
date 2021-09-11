@@ -102,7 +102,7 @@ trait Sorting
         if (strlen($direction)) {
             $direction = ($direction && strtolower($direction) != 'asc') ? 'desc' : 'asc';
         } else {
-            $direction = '';
+            $direction = 'asc';
         }
 
         $this->sorting = strlen($sorting) ? [$sorting => $direction] : [];
