@@ -46,7 +46,7 @@ class AuthenticationTest extends TestCase
                 'password_confirmation' => '123456',
                 '_token' => $token
             ]);
-        
+
         $response->assertRedirect(route('home'));
 
         $this->assertTrue($this->get(route('admin.index'))->status() == '200');
@@ -64,8 +64,8 @@ class AuthenticationTest extends TestCase
     protected function authUser()
     {
         Auth::guard()->getProvider()->setDecorators(RegisterDecorator::class);
-        
-        $this->get(route('register'))->assertStatus(200);
+
+        $response = $this->get(route('register'))->assertStatus(200);
         
         $response = $this->withSession(['_token' => ($token = Str::random(40))])
             ->post(route('register'), [

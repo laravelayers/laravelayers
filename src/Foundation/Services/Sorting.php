@@ -62,10 +62,16 @@ trait Sorting
             }
         }
 
+        $direction = current($this->getSorting());
+        
         if (!empty($column)) {
-            $this->repository->{$sortingMethod}(current($this->getSorting()), $column);
+            $this->repository->{$sortingMethod}($direction, $column);
         } else {
-            $this->repository->{$sortingMethod}(current($this->getSorting()));
+            if ($direction) {
+                $this->repository->{$sortingMethod}($direction);
+            } else {
+                $this->repository->{$sortingMethod}();
+            }
         }
 
         return $this;
