@@ -5,6 +5,7 @@ namespace Laravelayers\Admin\Controllers\Auth;
 use Illuminate\Http\Request;
 use Laravelayers\Admin\Controllers\Controller as AdminController;
 use Laravelayers\Contracts\Admin\Services\Auth\RoleUserService as RoleUserServiceContract;
+use Laravelayers\Previous\PreviousUrl;
 
 class RoleUserController extends AdminController
 {
@@ -107,7 +108,7 @@ class RoleUserController extends AdminController
     {
         $items = $this->service->paginate($request);
 
-        $items->getElements()->setRedirectToPrevious(false)->validate($items);
+        $items->getElements()->validate($items);
 
         $this->service->updateMultiple($items);
 

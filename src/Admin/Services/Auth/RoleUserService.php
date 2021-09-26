@@ -108,8 +108,10 @@ class RoleUserService extends UserService implements RoleUserServiceContract
      */
     public function destroyMultiple(CollectionDecorator $items)
     {
+        $request = $items->getElements()->getRequest();
+
         return resolve(UserActionRepository::class)->destroy([
-            'actions' => (array) $items->role->getRole(),
+            'actions' => (array) $this->findRole($request->role)->getRole(),
             'users' => $items->getKeys()
         ]);
     }

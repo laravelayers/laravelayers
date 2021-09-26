@@ -97,7 +97,7 @@ class UserDecorator extends BaseUserDecorator implements DataDecoratorContract
     {
         return array_merge($this->getDefaultActions(), [
             'actions' => [
-                'type' => $this->user_actions_count ? 'show' : 'create',
+                'type' => $this->user_actions_count ? 'show' : 'add',
                 'link' => 'admin.auth.users.actions.index',
                 'text' => $this->user_actions_count,
                 'icon' => 'icon-user-shield',
@@ -148,15 +148,5 @@ class UserDecorator extends BaseUserDecorator implements DataDecoratorContract
     public function renderAvatar()
     {
         return $this->renderAsImage($this->getAvatar());
-    }
-
-    /**
-     * Get the sort order.
-     *
-     * @return int|null
-     */
-    public function getSorting()
-    {
-        return 1;
     }
 }

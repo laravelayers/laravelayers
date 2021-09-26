@@ -4,6 +4,7 @@ namespace Laravelayers\Form\Decorators;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\HtmlString;
@@ -728,7 +729,7 @@ class FormDecorator extends CollectionDecorator
                     }
 
                     if ($all && $this->getRequest()->has($prefixedKey) && gettype($value) == $valueType) {
-                        array_set($all, $prefixedKey, $value);
+                        Arr::set($all, $prefixedKey, $value);
                         $this->getRequest()->merge($all);
                     }
                 }

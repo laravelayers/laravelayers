@@ -84,7 +84,7 @@ class UserController extends AdminController
         $item = $this->service->save($item);
 
         return redirect()->route('admin.auth.users.edit', array_merge([
-            'id' => $item->getKey()
+            $item->getKey()
         ], PreviousUrl::getQuery()));
     }
 

@@ -79,7 +79,7 @@ class UserRoleController extends AdminController
         $item = $this->service->save($item);
 
         return redirect()->route('admin.auth.roles.edit', array_merge([
-            'id' => $item->getKey()
+            $item->getKey()
         ], PreviousUrl::getQuery()));
     }
 

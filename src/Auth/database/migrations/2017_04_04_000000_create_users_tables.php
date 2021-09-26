@@ -15,7 +15,7 @@ class CreateUsersTables extends Migration
     {
         if (!Schema::hasTable('users')) {
             Schema::create('users', function (Blueprint $table) {
-                $table->increments('id');
+                $table->bigIncrements('id');
                 $table->string('name');
                 $table->string('email')->unique();
                 $table->string('password');
@@ -26,7 +26,7 @@ class CreateUsersTables extends Migration
 
         if (!Schema::hasTable('user_actions')) {
             Schema::create('user_actions', function (Blueprint $table) {
-                $table->integer('user_id')->unsigned();
+                $table->bigInteger('user_id')->unsigned();
                 $table->string('action');
                 $table->integer('allowed')->unsigned();
                 $table->ipAddress('ip')->nullable();

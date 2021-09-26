@@ -21,7 +21,7 @@ class IndexController extends AdminController
      */
     public function index()
     {
-        $content = app(\Parsedown::class)->text(file_get_contents(__DIR__ . '/../../../README.md'));
+        $content = \Illuminate\Mail\Markdown::parse(file_get_contents(__DIR__ . '/../../../README.md'));
 
         return view('admin::index', compact('content'));
     }

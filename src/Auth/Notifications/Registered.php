@@ -59,12 +59,12 @@ class Registered extends Notification
 
         return (new MailMessage)
             ->level('success')
-            ->subject(Lang::getFromJson('Registered'))
-            ->greeting(Lang::getFromJson('Welcome!'))
-            ->line("**{$this->user->name}**, " . Lang::getFromJson('you are successfully registered.'))
-            ->action(Lang::getFromJson('Go to the site'), route('home'))
+            ->subject(Lang::get('Registered'))
+            ->greeting(Lang::get('Welcome!'))
+            ->line("**{$this->user->name}**, " . Lang::get('you are successfully registered.'))
+            ->action(Lang::get('Go to the site'), route('home'))
             ->salutation(new HtmlString(
-                    Lang::getFromJson('Regards') . ',<br>' . config('app.name'))
+                    Lang::get('Regards') . ',<br>' . config('app.name'))
             );
     }
 

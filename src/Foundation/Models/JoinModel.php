@@ -138,9 +138,7 @@ trait JoinModel
                     $first = $relation->getQualifiedRelatedPivotKeyName();
                     $second = $relation->getRelated()->getQualifiedKeyName();
                 } elseif ($relation_method == 'BelongsTo') {
-                    //TODO-WHEN-UPDATING-LARAVEL: to 5.8
-                    //$first = $relation->getQualifiedForeignKeyName();
-                    $first = $relation->getQualifiedForeignKey();
+                    $first = $relation->getQualifiedForeignKeyName();
                     $second = $relation->getQualifiedOwnerKeyName();
                 } else {
                     $second = $relation->getQualifiedForeignKeyName();

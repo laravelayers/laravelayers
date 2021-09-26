@@ -48,14 +48,14 @@ class UserRoleDecorator extends BaseRoleDecorator implements DataDecoratorContra
     {
         return [
             'users' => [
-                'type' => $this->user_actions_count ? 'show' : 'create',
+                'type' => $this->user_actions_count ? 'show' : 'add',
                 'link' => 'admin.auth.roles.users.index',
                 'text' => $this->user_actions_count,
                 'icon' => 'icon-users',
                 'group' => 0
             ],
             'actions' => [
-                'type' => $this->user_role_actions_count ? 'show' : 'create',
+                'type' => $this->user_role_actions_count ? 'show' : 'add',
                 'link' => 'admin.auth.roles.actions.index',
                 'text' => $this->user_role_actions_count,
                 'icon' => 'icon-user-shield',

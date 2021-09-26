@@ -94,7 +94,7 @@ trait RouteMacros
                 // Email Verification Routes...
                 if ($options['verify'] ?? true) {
                     RouteFacade::get('email/verify', $verify . '@show')->name('verification.notice');
-                    RouteFacade::get('email/verify/{id}', $verify . '@verify')->name('verification.verify');
+                    RouteFacade::get('email/verify/{id}/{hash}', $verify . '@verify')->name('verification.verify');
                     RouteFacade::get('email/resend', $verify . '@resend')->name('verification.resend');
                 }
             });

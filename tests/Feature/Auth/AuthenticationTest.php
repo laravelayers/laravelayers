@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
@@ -34,8 +35,8 @@ class AuthenticationTest extends TestCase
      */
     protected function authAdmin()
     {
-        $this->assertTrue(App::environment() == 'local');
-        
+        $this->assertTrue(in_array(App::environment(), ['testing', 'local']));
+
         $this->get(route('register'))->assertStatus(200);
 
         $response = $this->withSession(['_token' => ($token = Str::random(40))])
@@ -65,9 +66,9 @@ class AuthenticationTest extends TestCase
     {
         Auth::guard()->getProvider()->setDecorators(RegisterDecorator::class);
 
-        $response = $this->get(route('register'))->assertStatus(200);
-        
-        $response = $this->withSession(['_token' => ($token = Str::random(40))])
+        $this->get(route('register'))->assertStatus(200);
+
+        $this->withSession(['_token' => ($token = Str::random(40))])
             ->post(route('register'), [
                 'name' => 'user', 
                 'email' => 'user@test.localhost', 
@@ -99,19 +100,23 @@ class AuthenticationTest extends TestCase
         $this->get(route('home'));
 
         $verificationUrl = URL::temporarySignedRoute(
-            'verification.verify', Carbon::now()->addMinutes(60), ['id' => $user->getKey()]
+            'verification.verify',
+            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)), [
+                'id' => $user->getKey(),
+                'hash' => sha1($user->getEmailForVerification())
+            ]
         );
-        
+
         $this->get($verificationUrl)->assertRedirect(route('home'));
 
         $user = $userService->searchByName('user')->first();
-        
+
         $this->assertNotEmpty($user->getEmailVerifiedAt());
         
         $this->withSession(['_token' => ($token = Str::random(40))])->post(route('logout'), [
             '_token' => $token
         ]);
-        
+
         $this->get(route('home'))->assertStatus(302);
     }
 
@@ -140,7 +145,7 @@ class AuthenticationTest extends TestCase
         $this->get($url);
 
         $response = $this->withSession(['_token' => ($_token = Str::random(40))])
-            ->post(route('password.reset', [null]), [
+            ->post(route('password.request'), [
                 'email' => 'admin@test.localhost',
                 'password' => '12345678',
                 'password_confirmation' => '12345678',

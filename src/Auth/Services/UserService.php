@@ -64,7 +64,7 @@ class UserService extends Service implements UserServiceContract
             }
         }
 
-        return (!(clone $this->repository)->count() && App::environment('local'))
+        return (!(clone $this->repository)->count() && in_array(App::environment(), ['testing', 'local']))
             ? $this->createAdmin($user)
             : $this->repository->save($user);
     }

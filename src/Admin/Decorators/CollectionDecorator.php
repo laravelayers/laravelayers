@@ -86,7 +86,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
         if ($this->isEmpty()) {
             $actions = $this->getActions()->get('action');
 
-            if ($actions->getValue()->isNotEmpty()) {
+            if ($actions && $actions->getValue()->isNotEmpty()) {
                 $string .= $actions->render();
             }
 
@@ -853,7 +853,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
 
         return app(FormDecorator::class, [$elements])->setForm(['form' => [
             'name' => 'form_filter',
-            'value' => array_except($this->initFilterFormAction(), ['class']),
+            'value' => Arr::except($this->initFilterFormAction(), ['class']),
             'class' => $this->initFilterFormAction()['class'] ?? ''
         ]])->getElements($this);
     }

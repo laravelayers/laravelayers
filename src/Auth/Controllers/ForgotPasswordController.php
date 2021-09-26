@@ -61,8 +61,6 @@ class ForgotPasswordController extends Controller
      */
     public function sendResetLinkEmail(Request $request)
     {
-        //TODO-WHEN-UPDATING-LARAVEL: check changes
-
         $item = $this->service
             ->getResult();
 

@@ -23,7 +23,7 @@ class ResetPasswordDecorator extends UserDecorator
                 'type' => 'form.js',
                 'value' => [
                     'method' => 'POST',
-                    'link' => route('password.reset', ['token' => null])
+                    'link' => route('password.request')
                 ]
             ],
             'email' => [

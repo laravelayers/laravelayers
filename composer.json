@@ -3,7 +3,7 @@
     "description": "Layered structure for the Laravel: services, decorators, repositories. Foundation frontend framework. Forms. Navigation. User actions and roles. Admin panel.",
     "keywords": ["framework", "laravel", "admin"],
     "license": "MIT",
-    "homepage": "https://laravelayers.com",
+    "homepage": "https://github.com/laravelayers/laravelayers",
     "support": {
         "issues": "https://github.com/laravelayers/laravelayers/issues",
         "source": "https://github.com/laravelayers/laravelayers"
@@ -16,7 +16,7 @@
     ],
     "require": {
         "intervention/image": "^2.5",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "^6.0",
         "propaganistas/laravel-phone": "^4.2"
     },
     "require-dev": {

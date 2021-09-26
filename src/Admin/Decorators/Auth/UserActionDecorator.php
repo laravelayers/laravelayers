@@ -153,7 +153,9 @@ class UserActionDecorator extends BaseUserActionDecorator implements DataDecorat
                 )), '.');
             }
 
-            $value = preg_replace('/role(\.|$)/', '', $value);
+            if ($this->userRole->isEmpty()) {
+                $value = preg_replace('/role(\.|$)/', '', $value);
+            }
 
             $this->put($this->getActionColumn(), $value);
         }

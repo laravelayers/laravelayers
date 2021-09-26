@@ -19,7 +19,7 @@ $factory->define(\Laravelayers\Auth\Models\UserAction::class, function (Faker $f
         'user_id' => function () {
             return factory(\Laravelayers\Auth\Models\User::class)->create()->id;
         },
-        'action' => 'test.' . $faker->word(),
+        'action' => 'test.' . $faker->word() . '.' . $faker->word(),
         'allowed' => 1,
         'ip' => null
     ];

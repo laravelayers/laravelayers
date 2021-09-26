@@ -17,9 +17,9 @@ class VerifyEmail extends VerifyEmailNotification
     public function toMail($notifiable)
     {
         return parent::toMail($notifiable)
-            ->greeting(Lang::getFromJson('Hello!'))
+            ->greeting(Lang::get('Hello!'))
             ->salutation(new HtmlString(
-                    Lang::getFromJson('Regards') . ',<br>' . config('app.name'))
+                    Lang::get('Regards') . ',<br>' . config('app.name'))
             );
     }
 }
