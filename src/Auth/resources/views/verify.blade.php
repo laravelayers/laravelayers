@@ -25,8 +25,9 @@
                         <p>{{ __('Before proceeding, please check your email for a verification link.') }}<p>
                         <p>
                             {{ __('If you did not receive the email') }},
-                            <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
                         </p>
+
+                            {{ $elements->getElements()->render() }}
                     </div>
                 </div>
             </div>

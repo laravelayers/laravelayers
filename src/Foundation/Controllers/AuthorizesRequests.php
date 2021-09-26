@@ -47,17 +47,4 @@ trait AuthorizesRequests
             parent::authorizeResource($model, $parameter, $options, $request);
         }
     }
-
-    /**
-     * Get the map of resource methods to ability names.
-     *
-     * @return array
-     */
-    protected function resourceAbilityMap()
-    {
-        return array_merge(
-            parent::resourceAbilityMap(),
-            ['index' => 'viewAny']
-        );
-    }
 }

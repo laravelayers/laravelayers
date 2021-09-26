@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
 use Laravelayers\Auth\Decorators\ResetPasswordDecorator;
@@ -48,7 +47,7 @@ class ResetPasswordController extends Controller
 
         $this->service = Auth::guard()->getProvider()->setDecorators(
             ResetPasswordDecorator::class
-        );;
+        );
     }
 
     /**

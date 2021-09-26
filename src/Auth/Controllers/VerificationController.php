@@ -4,6 +4,8 @@ namespace Laravelayers\Auth\Controllers;
 
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravelayers\Auth\Decorators\VerificationDecorator;
 use Laravelayers\Foundation\Controllers\Controller;
 
 class VerificationController extends Controller
@@ -38,6 +40,10 @@ class VerificationController extends Controller
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+
+        $this->service = Auth::guard()->getProvider()->setDecorators(
+            VerificationDecorator::class
+        );
     }
 
     /**
@@ -48,8 +54,10 @@ class VerificationController extends Controller
      */
     public function show(Request $request)
     {
+        $elements = $this->service->getResult()->getElements();
+
         return $request->user()->hasVerifiedEmail()
             ? redirect($this->redirectPath())
-            : view('auth::verify');
+            : view('auth::verify', compact('elements'));
     }
 }
