@@ -85,7 +85,7 @@ class RegisterController extends Controller
     {
         $user = $this->service->getResult();
 
-        $user->getElements()->setSuccess(Lang::get(Lang::has($trans = 'auth.registered') ? $trans : 'auth::' . $trans));
+        $user->getElements()->setSuccess(Lang::get('Registration is complete!'));
 
         return $this->service->save($user);
     }

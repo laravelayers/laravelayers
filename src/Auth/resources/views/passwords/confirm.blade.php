@@ -1,4 +1,4 @@
-@extends('foundation::layouts.app', ['simple' => true, 'title' => Lang::get('Register')])
+@extends('foundation::layouts.app', ['simple' => true, 'title' => __('Confirm Password')])
 
 @section('content')
 
@@ -8,12 +8,12 @@
             <div class="large-5 medium-6 cell">
                 <div class="card">
                     <div class="card-divider">
-                        {{ Lang::get('Register') }}
+                        {{ __('Confirm Password') }}
                     </div>
                     <div class="card-section">
+                        <p>{{ __('Please confirm your password before continuing.') }}</p>
 
-                        {{ $elements->render() }}
-
+                        {{ $elements->getElements()->render() }}
                     </div>
                 </div>
             </div>

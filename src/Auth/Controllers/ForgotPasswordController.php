@@ -81,30 +81,4 @@ class ForgotPasswordController extends Controller
 
         return $result;
     }
-
-    /**
-     * Get the response for a successful password reset link.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
-     */
-    protected function sendResetLinkResponse(Request $request, $response)
-    {
-        return back()->with('status', Lang::get(Lang::has($response) ? $response : 'auth::' . $response));
-    }
-
-    /**
-     * Get the response for a failed password reset link.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
-     */
-    protected function sendResetLinkFailedResponse(Request $request, $response)
-    {
-        return back()->withErrors(
-            ['email' => Lang::get(Lang::has($response) ? $response : 'auth::' . $response)]
-        );
-    }
 }

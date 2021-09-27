@@ -48,6 +48,7 @@ trait RouteMacros
                 $register = '\Laravelayers\Auth\Controllers\RegisterController';
                 $forgot = '\Laravelayers\Auth\Controllers\ForgotPasswordController';
                 $reset = '\Laravelayers\Auth\Controllers\ResetPasswordController';
+                $confirm = '\Laravelayers\Auth\Controllers\ConfirmPasswordController';
                 $verify = '\Laravelayers\Auth\Controllers\VerificationController';
 
                 if (is_string($options)) {
@@ -62,7 +63,9 @@ trait RouteMacros
                         'login' => $options['path'] . 'LoginController',
                         'register' => $options['path'] . 'RegisterController',
                         'forgot' => $options['path'] . 'ForgotPasswordController',
-                        'reset' => $options['path'] . 'ResetPasswordController'
+                        'reset' => $options['path'] . 'ResetPasswordController',
+                        'confirm' => $options['path'] . 'ConfirmPasswordController',
+                        'verify' => $options['path'] . 'VerificationController'
                     ];
 
                     foreach($controllers as $var => $controller) {
@@ -89,6 +92,12 @@ trait RouteMacros
                     RouteFacade::post('password/email', $forgot . '@sendResetLinkEmail')->name('password.email');
                     RouteFacade::get('password/reset/{token}', $reset . '@showResetForm')->name('password.reset');
                     RouteFacade::post('password/reset', $reset . '@reset');
+                }
+
+                // Password Confirmation Routes...
+                if ($options['confirm'] ?? true) {
+                    $this->get('password/confirm', $confirm . '@showConfirmForm')->name('password.confirm');
+                    $this->post('password/confirm', $confirm . '@confirm');
                 }
 
                 // Email Verification Routes...

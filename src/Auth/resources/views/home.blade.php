@@ -1,4 +1,4 @@
-@extends('foundation::layouts.app', ['simple' => true, 'title' => Lang::get('auth::auth.profile_heading')])
+@extends('foundation::layouts.app', ['simple' => true, 'title' => Lang::get('Profile')])
 
 @section('content')
 
@@ -8,7 +8,7 @@
             <div class="large-5 medium-6 cell">
                 <div class="card">
                     <div class="card-divider">
-                        {{ Lang::get('auth::auth.profile_heading') }}
+                        {{ Lang::get('Profile') }}
                     </div>
                     <div class="card-section">
 
@@ -16,7 +16,7 @@
 
                             @component('foundation::layouts.callout', ['class' => 'success', 'closable' => true])
 
-                                <p>{{ Lang::get('auth::auth.email_verified') }}</p>
+                                <p>{{ Lang::get('Your email address has been verified.') }}</p>
 
                             @endcomponent
 

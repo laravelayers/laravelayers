@@ -16,8 +16,7 @@ class AuthMakeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:auth
-                    {--force : By default, overwrite existing views, run the migration command, and add routes}';
+    protected $signature = 'make:auth';
 
     /**
      * The console command description.
@@ -53,18 +52,13 @@ class AuthMakeCommand extends Command
      */
     protected function makeMigration()
     {
-        if ($this->option('force')
-            || $this->option('no-interaction')
-            || $this->confirm("Execute the migrate Artisan command?")
-        ) {
-            $table = resolve(User::class)->getModel()
-                ->userActions()
-                ->getModel()
-                ->getTable();
+        $table = resolve(User::class)->getModel()
+            ->userActions()
+            ->getModel()
+            ->getTable();
 
-            if ($this->option('force') || !Schema::hasTable($table)) {
-                $this->call('migrate');
-            }
+        if (!Schema::hasTable($table)) {
+            $this->call('migrate');
         }
     }
 }

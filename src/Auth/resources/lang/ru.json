@@ -1,9 +1,31 @@
 {
+    "Register" : "Зарегистрироваться",
+    "Login" : "Войти",
+    "Profile" : "Профиль",
+    "Logout" : "Выйти",
+
+    "Name" : "Имя",
+    "Avatar" : "Аватар",
+    "Password" : "Пароль",
+    "New Password" : "Новый пароль",
+    "Confirm Password" : "Подтвердите пароль",
+    "Remember Me" : "Запомнить Меня",
+
+    "Save" : "Сохранить",
+    "Send Password Reset Link" : "Отправить ссылку для сброса пароля",
+
+    "Forgot Your Password?" : "Забыли Ваш пароль?",
+
     "Verify Your Email Address" : "Подтвердите ваш E-mail адрес",
     "A fresh verification link has been sent to your email address." : "На ваш E-mail адрес была отправлена новая ссылка для подтверждения.",
     "Before proceeding, please check your email for a verification link." : "Прежде чем продолжить, проверьте свой E-mail на наличие ссылки для подтверждения.",
     "If you did not receive the email" : "Если вы не получили письмо",
     "click here to request another" : "нажмите здесь для запроса другого",
+    "Your email address has been verified." : "Ваш E-mail адрес подтвержден.",
+
+    "Registration is complete!" : "Регистрация завершена!",
+
+    "Please confirm your password before continuing." : "Пожалуйста, подтвердите свой пароль, прежде чем продолжить.",
 
     "Hello!" : "Здравствуйте!",
     "Welcome!" : "Добро пожаловать!",
@@ -18,7 +40,7 @@
 
     "Reset Password Notification" : "Уведомление о сбросе пароля",
     "You are receiving this email because we received a password reset request for your account." : "Вы получили это письмо, потому что мы получили запрос на сброс пароля для вашей учетной записи.",
-    "Reset Password" : "Сброс Пароля",
+    "Reset Password" : "Сбросить пароль",
     "This password reset link will expire in :count minutes." : "Срок действия ссылки для сброса пароля истечет через :count минут.",
     "If you did not request a password reset, no further action is required." : "Если вы не запрашивали сброс пароля, никаких дополнительных действий не требуется.",
 

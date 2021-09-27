@@ -7,7 +7,7 @@
             @push('stack_auth_login_' . ($uniqid = uniqid()))
 
                 <a href="{{ route('login') }}">
-                    @icon('icon-sign-in-alt icon-fw') {{ Lang::get((!Lang::has('auth.login') ? 'auth::' : '') . 'auth.login') }}
+                    @icon('icon-sign-in-alt icon-fw') {{ Lang::get('Login') }}
                 </a>
 
             @endpush
@@ -18,7 +18,7 @@
 
                     <li>
                         <a href="{{ route('register') }}">
-                            @icon('icon-user-plus icon-fw') {{ Lang::get((!Lang::has('auth.register') ? 'auth::' : '') . 'auth.register') }}
+                            @icon('icon-user-plus icon-fw') {{ Lang::get('Register') }}
                         </a>
                     </li>
 
@@ -81,7 +81,7 @@
                     <form action="{{ route('logout') }}" method="POST">
                         {{ csrf_field() }}
                         <a onclick="this.parentNode.submit();">
-                            @icon('icon-sign-out-alt icon-fw') {{ Lang::get((!Lang::has('auth.logout') ? 'auth::' : '') . 'auth.logout') }}
+                            @icon('icon-sign-out-alt icon-fw') {{ Lang::get('Logout') }}
                         </a>
                     </form>
                 </li>

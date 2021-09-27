@@ -5,7 +5,7 @@ namespace Laravelayers\Auth\Decorators;
 use Illuminate\Support\Facades\Lang;
 use Laravelayers\Form\Decorators\Form;
 
-class ForgotPasswordDecorator extends UserDecorator
+class ConfirmPasswordDecorator extends UserDecorator
 {
     use Form {
         Form::prepareElements as prepareFormElements;
@@ -23,22 +23,21 @@ class ForgotPasswordDecorator extends UserDecorator
                 'type' => 'form.js',
                 'value' => [
                     'method' => 'POST',
-                    'link' => route('password.email'),
+                    'link' => route('password.confirm')
                 ]
             ],
-            'email' => [
-                'type' => 'email.js',
-                'label' => Lang::get('Email'),
-                'error' => Lang::get('validation.email', ['attribute' => Lang::get('Email')]),
-                'autofocus' => '',
+            'password' => [
+                'type' => 'password.group',
+                'label' => Lang::get('Password'),
+                'error' => Lang::get('validation.required', ['attribute' => Lang::get('Password')]),
                 'required' => true,
-                'rules' => 'required|email|max:255'
+                'rules' => 'required|password'
             ],
             'button' => [
                 'type' => 'button',
                 'value' => [[
                     'type' => 'submit',
-                    'text' => Lang::get('Send Password Reset Link'),
+                    'text' => Lang::get('Confirm Password'),
                     'class' => 'expanded'
                 ]]
             ]
