@@ -147,7 +147,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $this->loadTranslationsFrom(__DIR__.'/resources/lang', 'auth');
         $this->loadJsonTranslationsFrom(__DIR__.'/resources/lang', 'auth');
 
         if ($this->app->runningInConsole()) {

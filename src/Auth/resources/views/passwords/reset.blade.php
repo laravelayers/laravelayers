@@ -1,4 +1,4 @@
-@extends('foundation::layouts.app', ['simple' => true, 'title' => Lang::get('auth::passwords.reset_heading')])
+@extends('foundation::layouts.app', ['simple' => true, 'title' => Lang::get('Reset Password')])
 
 @section('content')
 
@@ -8,7 +8,7 @@
         <div class="large-5 medium-6 cell">
             <div class="card">
                 <div class="card-divider">
-                    {{ Lang::get('auth::passwords.reset_heading') }}
+                    {{ Lang::get('Reset Password') }}
                 </div>
                 <div class="card-section">
 

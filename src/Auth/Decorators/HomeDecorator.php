@@ -37,20 +37,19 @@ class HomeDecorator extends UserDecorator
                 'type' => 'text.group',
                 'value' => $this->name,
                 'icon' => 'icon-user',
-                'label' => Lang::get('auth::auth.name_text'),
-                'help' => Lang::get('auth::auth.name_help'),
-                'error' => Lang::get('auth::auth.name_error'),
+                'label' => Lang::get('Name'),
+                'error' => Lang::get('validation.required', ['attribute' => Lang::get('Name')]),
                 'autofocus' => '',
                 'required' => true,
-                'rules' => ['required', 'string', 'max:255',
+                'rules' => ['required', 'alpha_dash', 'max:255',
                     "unique:{$this->table},{$this->nameColumn},{$this->getKey()},{$this->primaryKey}"
                 ]
             ],
             'email' => [
                 'type' => 'email.js',
                 'value' => $this->email,
-                'label' => Lang::get('auth::auth.email_text'),
-                'error' => Lang::get('auth::auth.email_error'),
+                'label' => Lang::get('Email'),
+                'error' => Lang::get('validation.email', ['attribute' => Lang::get('Email')]),
                 'required' => true,
                 'rules' => ['required', 'email', 'max:255',
                     "unique:{$this->table},{$this->emailColumn},{$this->getKey()},{$this->primaryKey}"
@@ -63,35 +62,38 @@ class HomeDecorator extends UserDecorator
                     'image/png'
                 ],
                 'value' => $this->getAvatar(),
-                'group' => 'avatar',
+                'group' => Lang::get('Avatar'),
                 'data-image-mode' => 3,
                 'rules' => 'mimes:jpg,png',
                 'hidden' => static::$isHiddenAvatar
             ],
             'old_password' => [
                 'type' => 'password.group',
-                'label' => Lang::get('auth::auth.password_text'),
-                'error' => Lang::get('auth::auth.password_error'),
+                'label' => Lang::get('Password'),
+                'error' => Lang::get('validation.required', ['attribute' => Lang::get('Password')]),
                 'required' => true,
-                'rules' => 'required|string|min:6'
+                'rules' => 'required|string'
             ],
             'password' => [
                 'type' => 'password.group',
-                'label' => Lang::get('auth::auth.new_password_text'),
-                'help' => Lang::get('auth::auth.password_help'),
+                'label' => Lang::get('New Password'),
+                'error' => Lang::get('validation.min.string', ['attribute' => Lang::get('Password'), 'min' => 8]),
                 'autocomplete' => 'new-password',
-                'rules' => 'confirmed|string|min:6'
+                'data-validator' => 'validator',
+                'data-validator-name' => 'isLength',
+                'data-validator-options' => htmlspecialchars(json_encode(['min' => 8])),
+                'rules' => 'confirmed|string|min:8'
             ],
             'password_confirmation' => [
                 'type' => 'password.group',
-                'label' => Lang::get('auth::auth.new_password_confirmation_text'),
-                'error' => Lang::get('auth::auth.new_password_confirmation_error')
+                'label' => Lang::get('Confirm Password'),
+                'error' => Lang::get('validation.required', ['attribute' => Lang::get('Confirm Password')])
             ],
             'button' => [
                 'type' => 'button',
                 'value' => [[
                     'type' => 'submit',
-                    'text' => Lang::get('auth::auth.profile_button_text'),
+                    'text' => Lang::get('Save'),
                     'class' => 'expanded',
                 ]]
             ]

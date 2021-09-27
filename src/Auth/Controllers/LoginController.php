@@ -107,21 +107,6 @@ class LoginController extends Controller
     }
 
     /**
-     * Get the failed login response instance.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws ValidationException
-     */
-    protected function sendFailedLoginResponse(Request $request)
-    {
-        throw ValidationException::withMessages([
-            $this->username() => [Lang::get(Lang::has($trans = 'auth.failed') ? $trans : 'auth::' . $trans)],
-        ]);
-    }
-
-    /**
      * Get the login username to be used by the controller.
      *
      * @return string
@@ -129,23 +114,5 @@ class LoginController extends Controller
     public function username()
     {
         return 'email';
-    }
-
-    /**
-     * Redirect the user after determining they are locked out.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    protected function sendLockoutResponse(Request $request)
-    {
-        $seconds = $this->limiter()->availableIn(
-            $this->throttleKey($request)
-        );
-
-        throw ValidationException::withMessages([
-            $this->username() => [Lang::get(Lang::has($trans = 'auth.throttle') ? $trans : 'auth::' . $trans, ['seconds' => $seconds])],
-        ])->status(423);
     }
 }

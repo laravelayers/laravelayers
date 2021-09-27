@@ -37,9 +37,9 @@ class LoginDecorator extends UserDecorator
                 'type' => 'text.group',
                 'value' => $this->name,
                 'icon' => 'icon-user',
-                'label' => Lang::get('auth::auth.name_text'),
+                'label' => Lang::get('Name'),
                 'help' => Lang::get('auth::auth.name_help'),
-                'error' => Lang::get('auth::auth.name_error'),
+                'error' => Lang::get('validation.required', ['attribute' => Lang::get('Name')]),
                 'autofocus' => '',
                 'required' => true,
                 'rules' => 'required|string',
@@ -48,8 +48,8 @@ class LoginDecorator extends UserDecorator
             'email' => [
                 'type' => 'email.js',
                 'value' => $this->email,
-                'label' => Lang::get('auth::auth.email_text'),
-                'error' => Lang::get('auth::auth.email_error'),
+                'label' => Lang::get('Email'),
+                'error' => Lang::get('validation.email', ['attribute' => Lang::get('Email')]),
                 'required' => true,
                 'autofocus' => '',
                 'rules' => 'required|email',
@@ -57,15 +57,15 @@ class LoginDecorator extends UserDecorator
             ],
             'password' => [
                 'type' => 'password.group',
-                'label' => Lang::get('auth::auth.password_text'),
-                'error' => Lang::get('auth::auth.password_error'),
+                'label' => Lang::get('Password'),
+                'error' => Lang::get('validation.required', ['attribute' => Lang::get('Password')]),
                 'required' => true,
                 'rules' => 'required|string'
             ],
             'remember' => [
                 'type' => 'checkbox',
                 'value' => [[
-                    'text' => Lang::get('auth::auth.remember_text')
+                    'text' => Lang::get('Remember Me')
                 ]],
                 'multiple' => false
             ],
@@ -73,7 +73,7 @@ class LoginDecorator extends UserDecorator
                 'type' => 'button',
                 'value' => [[
                     'type' => 'submit',
-                    'text' => Lang::get('auth::auth.login_button_text'),
+                    'text' => Lang::get('Login'),
                     'class' => 'expanded'
                 ]]
             ]

@@ -1,4 +1,4 @@
-@extends('foundation::layouts.app', ['simple' => true, 'title' => Lang::get('auth::auth.login_heading')])
+@extends('foundation::layouts.app', ['simple' => true, 'title' => Lang::get('Login')])
 
 @section('content')
 
@@ -8,7 +8,7 @@
             <div class="large-5 medium-6 cell">
                 <div class="card">
                     <div class="card-divider">
-                        {{ Lang::get('auth::auth.login_heading') }}
+                        {{ Lang::get('Login') }}
                     </div>
                     <div class="card-section">
 
@@ -18,7 +18,7 @@
 
                             <div>
                                 <a href="{{ route('password.request') }}">
-                                    {{ Lang::get('auth::auth.forgot_password') }}
+                                    {{ Lang::get('Forgot Your Password?') }}
                                 </a>
                             </div>
 
