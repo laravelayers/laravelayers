@@ -3,6 +3,7 @@
 namespace Laravelayers\Foundation\Console\Commands;
 
 use Illuminate\Foundation\Console\ModelMakeCommand as IlluminateModelMakeCommand;
+use Illuminate\Support\Str;
 use Laravelayers\Foundation\Console\GeneratorCommand as TraitGeneratorCommand;
 use Laravelayers\Foundation\Models\Model;
 use Laravelayers\Foundation\Models\Pivot;
@@ -126,7 +127,7 @@ class ModelMakeCommand extends IlluminateModelMakeCommand
         $modelNamespace = $this->getNamespace($name);
 
         $replace = [
-            'DummyTable' => snake_case(str_replace($modelNamespace.'\\', '', $name)),
+            'DummyTable' => Str::snake(str_replace($modelNamespace.'\\', '', $name)),
             "use {$modelNamespace}\Model;\n" => '',
         ];
 

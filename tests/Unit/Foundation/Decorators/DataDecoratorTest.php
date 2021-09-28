@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Foundation\Decorators;
 
-use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravelayers\Auth\Decorators\UserActionDecorator;
 use Laravelayers\Auth\Decorators\UserDecorator;
-use Laravelayers\Auth\Models\User as UserModel;
+use Laravelayers\Auth\Models\User;
+use Laravelayers\Auth\Models\UserAction;
 use Laravelayers\Auth\Services\UserService;
 use Laravelayers\Foundation\Decorators\CollectionDecorator;
 use Laravelayers\Foundation\Decorators\DataDecorator;
@@ -15,20 +15,6 @@ use Tests\TestCase;
 class DataDecoratorTest extends TestCase
 {
     use RefreshDatabase;
-
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app
-            ->make(Factory::class)
-            ->load(dirname(__DIR__, 4) . '/database/factories');
-    }
 
     /**
      * Test of the "make" method.
@@ -59,7 +45,7 @@ class DataDecoratorTest extends TestCase
     {
         $data = $this->getData();
 
-        $this->assertTrue($data->getTable() == UserModel::first()->getTable());
+        $this->assertTrue($data->getTable() == User::first()->getTable());
     }
 
     /**
@@ -69,7 +55,7 @@ class DataDecoratorTest extends TestCase
     {
         $data = $this->getData();
 
-        $this->assertTrue($data->getKey() == UserModel::first()->getKey());
+        $this->assertTrue($data->getKey() == User::first()->getKey());
     }
 
     /**
@@ -79,7 +65,7 @@ class DataDecoratorTest extends TestCase
     {
         $data = $this->getData();
 
-        $this->assertTrue($data->getKeyName() == UserModel::first()->getKeyName());
+        $this->assertTrue($data->getKeyName() == User::first()->getKeyName());
 
         $keyName = $data->getKeyName();
 
@@ -98,7 +84,7 @@ class DataDecoratorTest extends TestCase
         $data->put('test', 1);
 
         $this->assertTrue(count($data->getOnlyOriginal()) + 1 == $data->count());
-        $this->assertTrue(count($data->getOnlyOriginal()) == count(UserModel::first()->getOriginal()));
+        $this->assertTrue(count($data->getOnlyOriginal()) == count(User::first()->getOriginal()));
     }
 
     /**
@@ -108,7 +94,7 @@ class DataDecoratorTest extends TestCase
     {
         $keys = $this->getData()->getOriginalKeys();
 
-        $original = UserModel::first()->getOriginal();
+        $original = User::first()->getOriginal();
 
         $this->assertTrue(count($keys) == count($original));
 
@@ -141,7 +127,7 @@ class DataDecoratorTest extends TestCase
     {
         $keys = $this->getData()->getDateKeys();
 
-        $original = array_flip(UserModel::first()->getDates());
+        $original = array_flip(User::first()->getDates());
 
         $this->assertTrue(count($keys) == count($original));
 
@@ -155,8 +141,8 @@ class DataDecoratorTest extends TestCase
      */
     public function testGetTimestampKeys()
     {
-        $this->assertTrue($this->getData()->getTimestampKeys()['created_at'] == UserModel::CREATED_AT);
-        $this->assertTrue($this->getData()->getTimestampKeys()['updated_at'] == UserModel::UPDATED_AT);
+        $this->assertTrue($this->getData()->getTimestampKeys()['created_at'] == User::CREATED_AT);
+        $this->assertTrue($this->getData()->getTimestampKeys()['updated_at'] == User::UPDATED_AT);
     }
 
     /**
@@ -170,7 +156,7 @@ class DataDecoratorTest extends TestCase
 
         $this->assertTrue($userActions instanceof CollectionDecorator);
 
-        $userActionsModel = UserModel::first()->userActions;
+        $userActionsModel = User::first()->userActions;
 
         $this->assertTrue($userActions->first()->action == $userActionsModel->first()->action);
 
@@ -241,18 +227,19 @@ class DataDecoratorTest extends TestCase
     {
         $service = app(UserService::class);
 
-        $created = factory(UserModel::class)
-            ->create()
-            ->each(function ($user) {
-                $userActions = factory(\Laravelayers\Auth\Models\UserAction::class, 2)->make([
-                    'user_id' => $user->id
-                ]);
+        User::factory()
+            ->has(
+                UserAction::factory()->count(2)
+                    ->state(function (array $attributes, User $user) {
+                        return ['user_id' => $user->id];
+                    })
+            )
+            ->create();
 
-                $user->userActions()->saveMany($userActions);
-            });
+        $user = $service->withActionsAndRoles()->get()->last();
 
-        $this->assertTrue($created);
+        $this->assertTrue($user->isNotEmpty());
 
-        return $service->withActionsAndRoles()->get()->last();
+        return $user;
     }
 }

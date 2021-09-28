@@ -72,8 +72,7 @@ class Foundation extends Preset
             'app.scss',
             'app.admin.scss',
         ], $from, $to);
-
-
+        
         $default_from = "{$from}/default";
         $default_to = "{$to}/default";
 
@@ -154,6 +153,10 @@ class Foundation extends Preset
      */
     protected static function updateFiles($files, $from, $to)
     {
+        if (!file_exists($to)) {
+            File::makeDirectory($to, 0755, true);
+        }
+        
         foreach($files as $file) {
             if (File::exists("{$to}/{$file}")) {
                 copy("{$to}/{$file}", "{$to}/{$file}.bak");

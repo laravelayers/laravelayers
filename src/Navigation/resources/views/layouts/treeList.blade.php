@@ -1,6 +1,6 @@
 @if (!empty($tree) && $tree->isNotEmpty())
 
-    @component($list, ['tree' => $tree])
+    @component(e($list), ['tree' => $tree])
 
         @slot('listClass')
 

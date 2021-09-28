@@ -2,11 +2,14 @@
 
 namespace Laravelayers\Auth\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravelayers\Contracts\Auth\UserRoleAction as UserRoleActionContract;
 use Laravelayers\Foundation\Models\Model;
 
 class UserRoleAction extends Model implements UserRoleActionContract
 {
+    use HasFactory;
+    
     /**
      * The primary key for the model.
      *

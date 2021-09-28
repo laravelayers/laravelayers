@@ -2,11 +2,14 @@
 
 namespace Laravelayers\Auth\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravelayers\Contracts\Auth\UserAction as UserActionContract;
 use Laravelayers\Foundation\Models\Model;
 
 class UserAction extends Model implements UserActionContract
 {
+    use HasFactory;
+    
     /**
      * The primary key for the model.
      *

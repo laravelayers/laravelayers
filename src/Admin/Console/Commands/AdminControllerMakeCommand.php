@@ -79,7 +79,7 @@ class AdminControllerMakeCommand extends ControllerMakeCommand
                     $this->comment('Please add the route "' . $route . '" for the controller in /routes/web.php');
                 }
 
-                $this->comment('Run "php artisan admin:cache" to reset the menu cache in the admin panel.');
+                $this->comment('Run "php artisan admin:menu-cache" to reset the menu cache in the admin panel.');
             }
         }
     }
@@ -246,7 +246,7 @@ class AdminControllerMakeCommand extends ControllerMakeCommand
 
         if (!$this->files->exists($file)) {
             if (!$this->files->exists($path)) {
-                $this->files->makeDirectory($path);
+                $this->files->makeDirectory($path, 0755, true);
             }
 
             copy(__DIR__.'/stubs/admin.lang.stub', $file);
