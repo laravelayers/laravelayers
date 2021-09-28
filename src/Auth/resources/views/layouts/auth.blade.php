@@ -32,7 +32,7 @@
 
                     @stack('stack_auth_login_' . $uniqid)
 
-                    @if (!empty($isDropdown) && Route::has('register') && !starts_with(Request::url(), route('register')))
+                    @if (!empty($isDropdown) && Route::has('register') && !Str::startsWith(Request::url(), route('register')))
 
                         <ul class="menu vertical nested{{ !empty($isDropdown) && !empty($isActive) ? ' is-active' : ''}}">
                             <li>
