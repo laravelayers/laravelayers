@@ -2,6 +2,7 @@
 
 namespace Laravelayers\Auth\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravelayers\Contracts\Auth\User as UserContract;
@@ -11,6 +12,7 @@ use Laravelayers\Foundation\Models\DatabaseNotification;
 class User extends Authenticatable implements UserContract
 {
     use ModelTrait,
+        HasFactory,
         Notifiable;
 
     /**

@@ -62,7 +62,7 @@ trait GeneratorCommand
         ]);
 
         if ($replace['DummyBaseClass'] == class_basename($this->getNameInput())) {
-            $replace['DummyBaseClass'] = studly_case('Base_' . class_basename($this->getBaseClass()));
+            $replace['DummyBaseClass'] = Str::studly('Base_' . class_basename($this->getBaseClass()));
             $replace['DummyFullBaseClass'] = "{$this->getBaseClass()} as {$replace['DummyBaseClass']}";
         }
 
@@ -129,7 +129,7 @@ trait GeneratorCommand
         $inputs = explode('/', $value);
 
         foreach($inputs as $key => $input) {
-            $inputs[$key] = camel_case($input);
+            $inputs[$key] = Str::camel($input);
         }
 
         return implode($inputs, '/');

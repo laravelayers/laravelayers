@@ -2,11 +2,10 @@
 
 namespace Tests\Unit\Foundation\Decorators;
 
-use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Laravelayers\Auth\Decorators\UserDecorator;
-use Laravelayers\Auth\Models\User as UserModel;
+use Laravelayers\Auth\Models\User;
 use Laravelayers\Auth\Services\UserService;
 use Laravelayers\Foundation\Decorators\CollectionDecorator;
 use Tests\TestCase;
@@ -14,20 +13,6 @@ use Tests\TestCase;
 class CollectionDecoratorTest extends TestCase
 {
     use RefreshDatabase;
-
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app
-            ->make(Factory::class)
-            ->load(dirname(__DIR__, 4) . '/database/factories');
-    }
     
     /**
      * Test of the "make" method.
@@ -68,7 +53,7 @@ class CollectionDecoratorTest extends TestCase
     {
         $keys = $this->getData()->getKeys();
 
-        $original = UserModel::get();
+        $original = User::get();
 
         $this->assertTrue(count($keys) == count($original));
 
@@ -138,7 +123,7 @@ class CollectionDecoratorTest extends TestCase
         $items = $service->get();
 
         if ($items->isEmpty()) {
-            factory(UserModel::class, 3)->create();
+            User::factory()->count(3)->create();
 
             $items = $service->get();
         }

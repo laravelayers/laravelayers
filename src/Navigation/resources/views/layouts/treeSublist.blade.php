@@ -1,6 +1,6 @@
 @if (strlen($node->menuParentId) && $node->getTree()->isNotEmpty())
 
-    @component($sublist, ['tree' => $tree, 'node' => $node])
+    @component(e($sublist), ['tree' => $tree, 'node' => $node])
 
         @slot('sublistClass')
 

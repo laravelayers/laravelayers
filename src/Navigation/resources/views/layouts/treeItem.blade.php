@@ -1,4 +1,4 @@
-@component($item, ['tree' => $tree, 'node' => $node])
+@component(e($item), ['tree' => $tree, 'node' => $node])
 
     @slot('itemClass')
 

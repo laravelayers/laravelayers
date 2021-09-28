@@ -2,10 +2,9 @@
 
 namespace Tests\Unit\Pagination\Decorators;
 
-use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravelayers\Auth\Decorators\UserDecorator;
-use Laravelayers\Auth\Models\User as UserModel;
+use Laravelayers\Auth\Models\User;
 use Laravelayers\Auth\Services\UserService;
 use Laravelayers\Foundation\Decorators\CollectionDecorator;
 use Laravelayers\Pagination\Decorators\PaginatorDecorator;
@@ -15,20 +14,6 @@ use Tests\TestCase;
 class PaginatorDecoratorTest extends TestCase
 {
     use RefreshDatabase;
-
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app
-            ->make(Factory::class)
-            ->load(dirname(__DIR__, 4) . '/database/factories');
-    }
     
     /**
      * Test of the "make" method.
@@ -113,7 +98,7 @@ class PaginatorDecoratorTest extends TestCase
             : $service->paginate($perPage, $pageName, $page);
 
         if ($items->isEmpty()) {
-            factory(UserModel::class, $count)->create();
+            User::factory()->count($count)->create();
             
             $items = $simplePaginate
                 ? $service->simplePaginate($perPage, $pageName, $page)

@@ -2,11 +2,14 @@
 
 namespace Laravelayers\Auth\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravelayers\Contracts\Auth\UserRole as UserRoleContract;
 use Laravelayers\Foundation\Models\Model;
 
 class UserRole extends Model implements UserRoleContract
 {
+    use HasFactory;
+    
     /**
      * Indicates if the model should be timestamped.
      *

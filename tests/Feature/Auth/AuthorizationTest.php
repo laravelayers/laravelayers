@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Laravelayers\Admin\Services\Auth\UserRoleService;
+use Laravelayers\Auth\Models\User;
+use Laravelayers\Auth\Models\UserAction;
 use Laravelayers\Auth\Services\UserService;
 use Tests\TestCase;
 
@@ -14,32 +16,11 @@ class AuthorizationTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app
-            ->make(Factory::class)
-            ->load(dirname(__DIR__, 3) . '/database/factories');
-    }
-
-    /**
      * Test user authorization.
      */
     public function testAuthUser()
     {
-        $user = $this->getUser();
-
-        $this->withSession(['_token' => ($token = Str::random(40))])
-            ->post(route('login'), [
-                'email' => $user->email,
-                'password' => '123456',
-                '_token' => $token
-            ]);
+        $user = $this->authUser();
 
         $this->assertTrue($this->get(route('home'))->status() == 200);
         $this->assertTrue($this->get(route('admin.index'))->status() == 403);
@@ -50,7 +31,7 @@ class AuthorizationTest extends TestCase
      */
     public function testAuthActions()
     {
-        $user = $this->authAdmin([
+        $user = $this->authUser([
             'admin.auth.users.edit',
             ['action' => 'admin.auth.users.show', 'allowed' => 1, 'ip' => '::1'],
             ['action' => 'admin.auth.roles'],
@@ -80,7 +61,7 @@ class AuthorizationTest extends TestCase
      */
     public function testAuthRoles()
     {
-        $user = $this->authAdmin([
+        $user = $this->authUser([
             'admin.auth.roles',
             'admin.auth.users.actions',
         ]);
@@ -106,7 +87,7 @@ class AuthorizationTest extends TestCase
             '_token' => $token
         ]);
 
-        $this->authAdmin([
+        $this->authUser([
             'role.administrator',
             ['action' => 'admin.auth.users.edit', 'allowed' => 0],
             ['action' => 'admin.auth.roles.users', 'allowed' => 0, 'ip' => '127.0.0.1']
@@ -118,16 +99,19 @@ class AuthorizationTest extends TestCase
     }
 
     /**
-     * Admin authentication.
+     * User authentication.
+     *
+     * @param array $actions
+     * @return DataDecorator
      */
-    protected function authAdmin($actions)
+    protected function authUser($actions = [])
     {
         $user = $this->getUser($actions);
 
         $this->withSession(['_token' => ($token = Str::random(40))])
             ->post(route('login'), [
                 'email' => $user->email,
-                'password' => '123456',
+                'password' => '12345678',
                 '_token' => $token
             ])
             ->assertRedirect(route('home'));
@@ -145,26 +129,30 @@ class AuthorizationTest extends TestCase
     {
         $service = app(UserService::class);
 
-        $created = factory(\Laravelayers\Auth\Models\User::class)
-            ->create()
-            ->each(function ($user) use($actions) {
-                if ($actions) {
-                    $userActions = factory(\Laravelayers\Auth\Models\UserAction::class, count($actions))->make([
-                        'user_id' => $user->id
-                    ]);
+        $userActions = [];
 
-                    foreach ($actions as $key => $value) {
-                        $userActions[$key]->action = $value['action'] ?? $value;
-                        $userActions[$key]->allowed = $value['allowed'] ?? 1;
-                        $userActions[$key]->ip = $value['ip'] ?? null;
-                    }
+        foreach ($actions as $key => $value) {
+            $actions[$key] = [
+                'action' => $value['action'] ?? $value,
+                'allowed' => $value['allowed'] ?? 1,
+                'ip' => $value['ip'] ?? null
+            ];
+        }
 
-                    $user->userActions()->saveMany($userActions);
-                }
-            });
+        User::factory()
+            ->has(
+                UserAction::factory()->count(count($actions))
+                    ->state(new Sequence(...$actions))
+                    ->state(function (array $attributes, User $user) {
+                        return ['user_id' => $user->id];
+                    })
+            )
+            ->create();
 
-        $this->assertTrue($created);
+        $user = $service->withActionsAndRoles()->get()->last();
 
-        return $service->withActionsAndRoles()->get()->last();
+        $this->assertTrue($user->isNotEmpty());
+
+        return $user;
     }
 }
