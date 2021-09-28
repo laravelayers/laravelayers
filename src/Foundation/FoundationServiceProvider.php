@@ -2,7 +2,6 @@
 namespace Laravelayers\Foundation;
 
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Foundation\Console\PresetCommand;
 use Illuminate\Support\ServiceProvider;
 use Laravelayers\Foundation\Console\Presets\Foundation;
 use Laravelayers\Foundation\Decorators\CollectionDecorator;
@@ -85,46 +84,19 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function registerCommands()
     {
-        PresetCommand::macro('foundation', function ($command) {
-            $command->call('preset', ['type' => 'laravelayers-foundation']);
-        });
-
-        PresetCommand::macro('laravelayers-foundation', function ($command) {
-            $isInstall = !$command->confirm("Do you want to update only assets without installing a preset?");
-
-            if ($isInstall) {
-                Foundation::install();
-            } else {
-                Foundation::updateAssets();
-            }
-
-            if ($command->option('no-interaction')
-                || $command->confirm("Do you want to install authentication scaffolding now?")
-            ) {
-                Artisan::call('make:auth', ['--no-interaction' => true]);
-            }
-
-            if ($command->option('no-interaction')
-                || $command->confirm("Do you want to install admin routes scaffolding now?")
-            ) {
-                Artisan::call('admin:make-routes');
-            }
-
-            $command->info('Laravelayers-foundation scaffolding installed successfully.');
-
-            if ($isInstall) {
-                $command->comment('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
-            }
-        });
-
         if ($this->app->runningInConsole()) {
             $this->commands([
+                'command.install.laravelyares',
                 'command.decorator.make',
                 'command.repository.make',
                 'command.service.make',
                 'command.js.make',
                 'command.stub.publish'
             ]);
+
+            $this->app->bind('command.install.laravelyares', function () {
+                return $this->app->make(\Laravelayers\Foundation\Console\Commands\InstallLaravelayersCommand::class);
+            });
 
             $this->app->extend('command.controller.make', function () {
                 return $this->app->make(\Laravelayers\Foundation\Console\Commands\ControllerMakeCommand::class);

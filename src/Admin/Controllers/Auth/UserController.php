@@ -16,8 +16,6 @@ class UserController extends AdminController
      */
     public function __construct(UserServiceContract $userService)
     {
-        $this->middleware('password.confirm');
-
         $this->authorizeResource();
 
         $this->service = $userService

@@ -2,9 +2,9 @@
 
 namespace Laravelayers\Foundation\Console\Presets;
 
-use Illuminate\Foundation\Console\Presets\Preset;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use Laravel\Ui\Presets\Preset;
 
 class Foundation extends Preset
 {
@@ -54,7 +54,7 @@ class Foundation extends Preset
                 'libphonenumber-js' => '^1.7.18',
                 'quill' => '^1.3.7',
                 'simplemde' => '^1.11.2',
-                'validator' => '^10.11.0'
+                'validator' => '^13.6.0'
             ] + $packages;
     }
 

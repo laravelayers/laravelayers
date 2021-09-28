@@ -43,8 +43,8 @@ class AuthenticationTest extends TestCase
             ->post(route('register'), [
                 'name' => 'admin',
                 'email' => 'admin@test.localhost',
-                'password' => '123456',
-                'password_confirmation' => '123456',
+                'password' => '12345678',
+                'password_confirmation' => '12345678',
                 '_token' => $token
             ]);
 
@@ -72,8 +72,8 @@ class AuthenticationTest extends TestCase
             ->post(route('register'), [
                 'name' => 'user', 
                 'email' => 'user@test.localhost', 
-                'password' => '123456', 
-                'password_confirmation' => '123456', 
+                'password' => '12345678',
+                'password_confirmation' => '12345678',
                 '_token' => $token,
             ]);
 
@@ -89,7 +89,7 @@ class AuthenticationTest extends TestCase
 
         $this->withSession(['_token' => ($token = Str::random(40))])->post(route('login'), [
             'email' => 'user@test.localhost',
-            'password' => '123456',
+            'password' => '12345678',
             '_token' => $token
         ]);
         
@@ -147,8 +147,8 @@ class AuthenticationTest extends TestCase
         $response = $this->withSession(['_token' => ($_token = Str::random(40))])
             ->post(route('password.request'), [
                 'email' => 'admin@test.localhost',
-                'password' => '12345678',
-                'password_confirmation' => '12345678',
+                'password' => '123456789',
+                'password_confirmation' => '123456789',
                 '_token' => $_token,
                 'token' => $token
             ]);
