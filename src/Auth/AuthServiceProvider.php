@@ -181,11 +181,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \Laravelayers\Auth\Console\AuthMakeCommand::class,
+                'command.auth.laravelayers',
             ]);
 
-            $this->app->extend('command.auth.make', function () {
-                return $this->app->make(\Laravelayers\Auth\Console\AuthMakeCommand::class);
+            $this->app->bind('command.auth.laravelayers', function () {
+                return $this->app->make(\Laravelayers\Auth\Console\AuthLaravelayersCommand::class);
             });
         }
     }

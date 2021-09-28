@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Laravelayers\Contracts\Auth\User;
 use Laravelayers\Foundation\Console\GeneratorCommand as TraitGeneratorCommand;
 
-class AuthMakeCommand extends Command
+class AuthLaravelayersCommand extends Command
 {
     use TraitGeneratorCommand;
 
@@ -16,7 +16,7 @@ class AuthMakeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:auth';
+    protected $signature = 'laravelayers:auth';
 
     /**
      * The console command description.
