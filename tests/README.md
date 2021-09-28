@@ -25,7 +25,12 @@ composer config repositories.laravelayers path ../laravelayers/laravelayers
     "repositories": {
         "laravelayers": {
             "type": "path",
-            "url": "../laravelayers/laravelayers"
+            "url": "../laravelayers/laravelayers",
+            "options": {
+                "versions": {
+                    "laravelayers/laravelayers": "dev-develop"
+                }
+            }
         }
     }
 */
