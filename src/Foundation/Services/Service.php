@@ -127,13 +127,7 @@ class Service implements ServiceContract
      */
     public function getFormElements(Request $request, $column = '', $index = null)
     {
-        $prefix = FormDecorator::getElementsPrefixName();
-
-        if ($prefix) {
-            $elements = $request->get($prefix, $request->old($prefix, []));
-        } else {
-            $elements = $request->all() ?: $request->old($prefix, []);
-        }
+        $elements = $request->getFormElements();
 
         return $column ? array_column($elements, $column, $index) : $elements;
     }

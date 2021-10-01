@@ -493,24 +493,28 @@ class DataDecorator extends Decorator
             ? $vars[$this->getDataKeyName()]
             : $vars;
 
+        foreach($this->getRelations() as $relation => $value) {
+            $data[$relation] = $value;
+        }
+
         $array = [];
 
-        foreach ($data as $propertyName => $propertyValue) {
-            if ($this instanceof DataDecorator && in_array($propertyName, $this->getHiddenKeys())) {
+        foreach ($data as $key => $value) {
+            if ($this instanceof DataDecorator && in_array($key, $this->getHiddenKeys())) {
                 continue;
             }
 
-            if (is_object($propertyValue)) {
-                $propertyValue = $propertyValue instanceof Arrayable
-                    ? $propertyValue->toArray()
-                    : get_object_vars($propertyValue);
+            if (is_object($value)) {
+                $value = $value instanceof Arrayable
+                    ? $value->toArray()
+                    : get_object_vars($value);
             }
 
             if (static::$snakeAttributes) {
-                $propertyName = Str::snake($propertyName);
+                $key = Str::snake($key);
             }
 
-            $array[$propertyName] = $propertyValue;
+            $array[$key] = $value;
         }
 
         if (!empty($vars[$this->getDataKeyName()])) {
@@ -518,5 +522,22 @@ class DataDecorator extends Decorator
         }
 
         return $array;
+    }
+
+    /**
+     * Prepare the instance for cloning.
+     *
+     * @return void
+     */
+    public function __clone()
+    {
+        parent::__clone();
+
+        foreach($this->getRelations(false) as $relation => $value)
+        {
+            if (!is_null(static::isDecorator($value))) {
+                $this->setRelation($relation, clone $value);
+            }
+        }
     }
 }
