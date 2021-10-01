@@ -590,25 +590,6 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
         }
 
         return $item;
-
-
-        $_this = clone $this;
-
-        $elements = $_this->getElements();
-
-        $ids = array_column($elements->getRequest()->get($elements->getElementsPrefixName()), 'id');
-
-        $id = array_search($key, $ids);
-
-        $item = $_this->get($id);
-
-        if (!is_null($item->{$item->getSortKey()})) {
-            $setter = Str::camel("set_{$item->getSortKey()}");
-dump($_this->getByKey($key));
-            $item->{$setter}($_this->getByKey($key)->{$item->getSortKey()});
-        }
-
-        return $item;
     }
 
 
