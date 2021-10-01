@@ -570,19 +570,42 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
      * Set the sort order of the specified item.
      *
      * @param int|string $key
+     * @param array $ids
      * @return \Laravelayers\Foundation\Decorators\DataDecorator
      */
-    public function setSorting($key)
+    public function setSorting($id)
     {
-        $item = $this->getByKey($key);
+        $item = clone $this->getByKey($id);
+
+        if (!is_null($item->{$item->getSortKey()})) {
+            $elements = $this->getElements()
+                ->getRequest()
+                ->getFormElements();
+
+            $key = array_search($id, array_column($elements, 'id'));
+
+            $setter = Str::camel("set_{$item->getSortKey()}");
+
+            $item->{$setter}($this->get($key)->{$item->getSortKey()});
+        }
+
+        return $item;
+
+
+        $_this = clone $this;
+
+        $elements = $_this->getElements();
+
+        $ids = array_column($elements->getRequest()->get($elements->getElementsPrefixName()), 'id');
+
+        $id = array_search($key, $ids);
+
+        $item = $_this->get($id);
 
         if (!is_null($item->{$item->getSortKey()})) {
             $setter = Str::camel("set_{$item->getSortKey()}");
-
-            $item->{$setter}(
-                $this->pluck($item->getSortKey(), $item->getKeyName())
-                    ->get($key)
-            );
+dump($_this->getByKey($key));
+            $item->{$setter}($_this->getByKey($key)->{$item->getSortKey()});
         }
 
         return $item;

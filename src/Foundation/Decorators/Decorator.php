@@ -340,7 +340,7 @@ class Decorator implements Arrayable, ArrayAccess, Countable, IteratorAggregate,
         ;
 
         foreach($this->getVisibleGetters() as $getter) {
-            $getterKey = Str::camel(str_after($getter, 'get'));
+            $getterKey = Str::camel(Str::after($getter, 'get'));
 
             $vars[$getterKey] = $this->{$getter}();
 

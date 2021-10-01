@@ -10,9 +10,10 @@ use Laravelayers\Foundation\Dto\Dto;
 
 class FoundationServiceProvider extends ServiceProvider
 {
-    use BladeDirectives, CollectionMacros {
+    use BladeDirectives, CollectionMacros, RequestMacros {
         BladeDirectives::boot as bootFromBladeDirectives;
         CollectionMacros::boot as bootFromEloquentCollectionMacros;
+        RequestMacros::boot as bootFromRequestMacros;
     }
 
     /**
@@ -34,6 +35,8 @@ class FoundationServiceProvider extends ServiceProvider
         $this->bootFromBladeDirectives();
 
         $this->bootFromEloquentCollectionMacros();
+
+        $this->bootFromRequestMacros();
     }
 
     /**
