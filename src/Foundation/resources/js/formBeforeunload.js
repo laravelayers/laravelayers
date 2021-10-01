@@ -87,7 +87,7 @@ class FormBeforeunload {
 
         if (this.options.confirm) {
             $(window).on('beforeunload.foundation.beforeunload', () => {
-                if (_this.$form.data('unsaved')) {
+                if (_this.$form.attr('data-unsaved') === 'true') {
                     return _this.options.messageBeforeunload;
                 }
             });
@@ -131,7 +131,7 @@ class FormBeforeunload {
                 let _this = this;
 
                 $container.bind(this.options.formContainerEvent, function () {
-                    if (_this.$form.data('unsaved')) {
+                    if (_this.$form.attr('data-unsaved') === 'true') {
                         _this.$form.submit();
                     }
                 });
@@ -147,7 +147,6 @@ class FormBeforeunload {
     _unsaved(yes = true) {
         this.options.unsaved = yes;
         this.$form.attr('data-unsaved', this.options.unsaved);
-        this.$form.data('unsaved', this.options.unsaved);
     }
 
     /**
