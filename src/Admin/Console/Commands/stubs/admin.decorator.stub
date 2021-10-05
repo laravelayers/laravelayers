@@ -21,6 +21,16 @@ class DummyClass extends DummyBaseClass implements DataDecoratorContract
     }
 
     /**
+     * Initialize actions.
+     *
+     * @return array
+     */
+    protected function initActions()
+    {
+        return $this->getDefaultActions();
+    }
+
+    /**
      * Initialize the form element for actions.
      *
      * @return array

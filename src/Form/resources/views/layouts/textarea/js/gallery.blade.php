@@ -4,7 +4,7 @@
      aria-labelledby="header_gallery_container_{{ $element->id }}">
 
     <p id="header_gallery_container_{{ $element->id }}">
-        {{ $element->label ?: '&nbsp;' }}
+        {!! $element->label ?: '&nbsp;' !!}
     </p>
 
     <span id="gallery_{{ $element->id }}"></span>

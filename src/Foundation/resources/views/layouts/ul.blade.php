@@ -10,7 +10,7 @@
 
     @endif
 
-        @foreach (((is_array($slot) ? $slot : (array) e($slot, false))) as $row)
+        @foreach (((is_array($slot) ? $slot : [$slot])) as $row)
 
             <li>
 

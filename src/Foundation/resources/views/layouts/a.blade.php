@@ -1,6 +1,6 @@
 @if ($slot)
 
-    @foreach ((is_array($slot) ? $slot : (array) e($slot, false)) as $key => $value)
+    @foreach ((is_array($slot) ? $slot : [$slot]) as $key => $value)
 
         {!! !empty($nowrap) ? "<nobr>" : '' !!}
 

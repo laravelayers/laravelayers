@@ -33,9 +33,9 @@ return [
         'filter_reset_link_text' => 'Сбросить фильтр',
 
         'search_group' => 'Поиск',
-        'search_by_id' => 'По ИД',
-        'search_by_name' => 'По названию',
-        'search_by_description' => 'По описанию',
+        'search_by_id_text' => 'По ИД',
+        'search_by_name_text' => 'По названию',
+        'search_by_description_text' => 'По описанию',
 
         'filter_group' => 'Фильтр',
 

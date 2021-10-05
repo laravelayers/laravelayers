@@ -53,16 +53,12 @@ trait Status
         }
 
         if ($request) {
-            $status = $request->has($name) ? $request->get($name) : $status;
-        } else {
-            $status = '';
-        }
+            $status = $request->get($name, $status);
 
-        if (strlen($status)) {
-            $operator = $operator ?: current($this->getStatus());
-
-            $this->setStatus($status, $operator, false)
-                ->setStatus($status, $operator, true);
+            if (strlen($status) || $request->has($name)) {
+                $this->setStatus($status, $operator, false)
+                    ->setStatus($status, $operator, true);
+            }
         }
 
         if ($status = $this->getStatus()) {

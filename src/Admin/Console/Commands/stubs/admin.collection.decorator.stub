@@ -17,6 +17,16 @@ class DummyClass extends DummyBaseClass
     }
 
     /**
+     * Initialize actions.
+     *
+     * @return array
+     */
+    protected function initActions()
+    {
+        return $this->getDefaultActions();
+    }
+
+    /**
      * Initialize the filter.
      *
      * @return array

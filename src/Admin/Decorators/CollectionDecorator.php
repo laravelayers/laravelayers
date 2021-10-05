@@ -195,9 +195,12 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
                     unset($columns[$column]);
 
                     $column = $value;
+                    $value = [];
+                } elseif (is_string($value) && $value) {
+                    $value = ['name' => $value];
+                } else {
+                    $value = [];
                 }
-
-                $value = [];
             }
 
             if (isset($value['hidden'])) {
@@ -1067,9 +1070,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
     protected function initSearch()
     {
         return [
-            'id' => [
-                'text' => static::transOfElement("search_by_id")
-            ]
+            'id' => []
         ];
     }
 
