@@ -67,7 +67,7 @@ class UserDecorator extends DataDecorator implements
      */
     protected static $avatarParams = [
         'image' => 'jpg',
-        'size' => 'original',
+        'size' => '',
         'width' => 200,
         'height' => 200,
         'quality' => 90,
@@ -294,7 +294,7 @@ class UserDecorator extends DataDecorator implements
     {
         return static::$avatarParams = [
             'image' => !is_null($extension) ?: 'jpg',
-            'size' => !is_null($size) ? $size : 'original',
+            'size' => !is_null($size) ? $size : '',
             'width' => !is_null($width) ? $width : $width,
             'height' => !is_null($height) ? $height : $height,
             'quality' => $quality,

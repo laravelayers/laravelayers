@@ -78,7 +78,7 @@ trait Images
 
         if ($uploaded['file']) {
             if (!$size && !is_null($size)) {
-                $size = 'original';
+                $size = 'default';
             }
 
             if ($size) {
@@ -211,7 +211,7 @@ trait Images
     {
         if ($image) {
             if (!$size && !is_null($size)) {
-                $size = 'original';
+                $size = 'default';
             }
 
             $image = $this->uploadedImages['extension'] ?? $image;
@@ -249,7 +249,7 @@ trait Images
         $sizeName = $size;
 
         if (!$size) {
-            $size = 'original';
+            $size = 'default';
             $sizeName = '';
         }
 
@@ -317,7 +317,7 @@ trait Images
             $extension = $extension ? ".{$extension}" : '';
         }
 
-        if ($name == 'original') {
+        if ($name == 'default') {
             $name = '';
         }
 
