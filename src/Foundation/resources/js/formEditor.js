@@ -116,6 +116,10 @@ class FormEditor {
             $element.parent().find('.CodeMirror').css('min-width', $element.css('min-width'));
         }
 
+        if ($element.hasClass('is-invalid-input')) {
+            $element.parent().find('.CodeMirror').addClass('is-invalid-input');
+        }
+
         $editor.codemirror.on("focus", function() {
             $element.parent().find('.CodeMirror').addClass('form-editor-focus');
             $element.parent().find('.editor-toolbar').addClass('form-editor-toolbar-focus');
@@ -133,12 +137,6 @@ class FormEditor {
                 $element.parent().find('.CodeMirror').addClass('is-invalid-input');
             } else {
                 $element.parent().find('.CodeMirror').removeClass('is-invalid-input');
-            }
-        });
-
-        this.$element.parents('form').on('invalid.zf.abide', function () {
-            if ($element.hasClass('is-invalid-input')) {
-                $element.parent().find('.CodeMirror').addClass('is-invalid-input');
             }
         });
 
@@ -248,6 +246,10 @@ class FormEditor {
 
         $editor.setContents($editor.clipboard.convert($element.val()));
 
+        if ($element.hasClass('is-invalid-input')) {
+            $qlEditor.addClass('is-invalid-input');
+        }
+
         $qlEditor.on('focus', () => {
             $qlEditor.addClass('form-editor-focus');
             $element.parent().find('.ql-toolbar').addClass('form-editor-toolbar-focus');
@@ -261,12 +263,6 @@ class FormEditor {
                 $qlEditor.addClass('is-invalid-input');
             } else {
                 $qlEditor.removeClass('is-invalid-input');
-            }
-        });
-
-        this.$element.parents('form').on('invalid.zf.abide', function () {
-            if ($element.hasClass('is-invalid-input')) {
-                $qlEditor.addClass('is-invalid-input');
             }
         });
 
