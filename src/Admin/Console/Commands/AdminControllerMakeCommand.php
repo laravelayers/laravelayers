@@ -70,17 +70,15 @@ class AdminControllerMakeCommand extends ControllerMakeCommand
         if (parent::handle() !== false) {
             $controller =  str_replace(['//', '/'], '\\', 'Admin/' . $this->getNameInput());
 
-            if ($this->getRoute()) {
-                $this->call('admin:menu-cache');
-            } else {
+            if (!$this->getRoute()) {
                 if (!$this->isRoute) {
                     $route = "Route::adminResource('" . $this->buildRouteReplacements()['DummyRoutePath'] . "', '" . $controller . "');";
 
                     $this->comment('Please add the route "' . $route . '" for the controller in /routes/web.php');
                 }
-
-                $this->comment('Run "php artisan admin:menu-cache" to reset the menu cache in the admin panel.');
             }
+
+            $this->comment('Run "php artisan admin:menu-cache" to reset the menu cache in the admin panel.');
         }
     }
 
@@ -205,7 +203,7 @@ class AdminControllerMakeCommand extends ControllerMakeCommand
 
         $path = preg_replace("/{$name}\/{$name}[\/]*$/", $name, $nameInput);
         $path = substr(str_replace('//', '/', "/{$path}/"), 1, -1);
-        $path = dirname($path) . '/' . str_replace('_', '/', Str::snake(basename($path)));
+        $path = ltrim(dirname($path) . '/' . str_replace('_', '/', Str::snake(basename($path))), './');
 
         $route = $this->getRoute();
 
