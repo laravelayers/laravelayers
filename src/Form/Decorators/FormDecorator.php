@@ -559,7 +559,7 @@ class FormDecorator extends CollectionDecorator
 
             if ($attributeName) {
                 $attributeNames[$attributeName] = $element->getLabel()
-                    ?: ($element->getAttributes('placeholder') ?: $element->get('name'));
+                    ?: $element->getGroup() ?: ($element->getAttributes('placeholder') ?: $element->get('name'));
             }
         }
 

@@ -92,7 +92,7 @@ trait Images
             }
         }
 
-        return $urls ?? ($size ? null : []);
+        return $urls ?? (!is_null($size) ? null : []);
     }
 
     /**
