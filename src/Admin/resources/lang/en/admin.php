@@ -23,7 +23,7 @@ return [
         'name' => 'Name',
         'description' => 'Description',
         'image' => 'Image',
-        'status_name' => 'Status',
+        'status' => 'Status',
         'created_at' => 'Created',
         'updated_at' => 'Updated'
     ],
@@ -42,6 +42,10 @@ return [
         'pagination_group' => 'Number of elements per page',
 
         'id_label' => 'ID',
+        'name_label' => 'Name',
+        'description_label' => 'Description',
+        'image_label' => 'Image',
+        'status_label' => 'Status',
         'created_at_label' => 'Creation date',
         'updated_at_label' => 'Update date',
         'yes_text' => 'Yes',

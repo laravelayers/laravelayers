@@ -127,11 +127,15 @@ trait Files
                     : rtrim($this->getFilePrefix($prefix) . $name, '_') . '.' . $file->getClientOriginalExtension();
 
                 $url = Storage::disk($disk)->url($path . $name);
+
+                if (!filter_var($url, FILTER_VALIDATE_URL)) {
+                    $url = Storage::disk($disk)->path($path . $name);
+                }
             }
 
             $this->uploadedFiles[] = ['file' => $file, 'disk' => $disk, 'path' => $path, 'name' => $name];
         }
-        
+
         return $url ?? '';
     }
 

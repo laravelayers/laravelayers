@@ -23,7 +23,7 @@ return [
         'name' => 'Название',
         'description' => 'Описание',
         'image' => 'Изображение',
-        'status_name' => 'Статус',
+        'status' => 'Статус',
         'created_at' => 'Создано',
         'updated_at' => 'Обновлено'
     ],
@@ -42,6 +42,10 @@ return [
         'pagination_group' => 'Количество элементов на странице',
 
         'id_label' => 'ИД',
+        'name_label' => 'Название',
+        'description_label' => 'Описание',
+        'image_label' => 'Изображение',
+        'status_label' => 'Статус',
         'created_at_label' => 'Дата создания',
         'updated_at_label' => 'Дата обновления',
         'yes_text' => 'Да',
