@@ -124,7 +124,7 @@ trait Images
      */
     public function setUploadedImages($files, $disk, $path = '', $prefix = null)
     {
-        if (!is_array($files) || !$files) {
+        if (!is_array($files)) {
             return $this->setUploadedImage($files, $disk, $path, $prefix);
         }
 

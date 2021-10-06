@@ -1,5 +1,11 @@
 //@import '../../../../../../node_modules/foundation-sites/scss/forms/label';
 
+label {
+  &.button.is-invalid-label {
+    @extend .is-invalid-label;
+  }
+}
+
 nobr {
   input + label {
     white-space: normal;
