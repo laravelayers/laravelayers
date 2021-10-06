@@ -275,9 +275,7 @@ trait Actions
     {
         $controller = Request::route()->getController();
 
-        $actions = Arr::except((array) $actions, $this->getCurrentAction('action'));
-
-        foreach ($actions as $key => $value) {
+        foreach ((array) $actions as $key => $value) {
             if (!method_exists($controller, Str::camel($key))) {
                 unset($actions[$key]);
             }
