@@ -115,7 +115,7 @@ trait Images
     /**
      * Set the uploaded images before store on a filesystem disk.
      *
-     * @param array|UploadedFile $files
+     * @param array|string|UploadedFile $files
      * @param string $disk
      * @param string $path
      * @param string|null $prefix
@@ -124,7 +124,7 @@ trait Images
      */
     public function setUploadedImages($files, $disk, $path = '', $prefix = null)
     {
-        if (!is_array($files)) {
+        if (!is_array($files) && !$files) {
             return $this->setUploadedImage($files, $disk, $path, $prefix);
         }
 
