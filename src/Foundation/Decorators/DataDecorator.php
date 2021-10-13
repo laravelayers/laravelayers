@@ -138,14 +138,17 @@ class DataDecorator extends Decorator
         if (static::isDecorator($data) === true) {
             if (!strcasecmp(get_class($data), self::class)) {
                 $data = array_merge($data->get(), [
-                    'hiddenKeys' => $data->getHiddenKeys(),
-                    'visibleProperties' => $data->getVisibleProperties(),
+                    'table' => $data->getTable(),
                     'primaryKey' => $data->getKeyName(),
                     'originalKeys' => $data->getOriginalKeys(),
                     'dateKeys' => $data->getDateKeys(),
+                    'timestampKeys' => $data->getTimestampKeys(),
+                    'timestamps' => $data->timestamps,
                     'relations' => $data->getRelations(false),
-                    'visibleGetters' => $data->getVisibleGetters(),
-                    'isSelected' => $data->getIsSelected()
+                    'hiddenKeys' => $data->getHiddenKeys(),
+                    'isSelected' => $data->getIsSelected(),
+                    'visibleProperties' => $data->getVisibleProperties(),
+                    'visibleGetters' => $data->getVisibleGetters()
                 ]);
 
             }
