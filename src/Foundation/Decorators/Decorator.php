@@ -255,7 +255,7 @@ class Decorator implements Arrayable, ArrayAccess, Countable, IteratorAggregate,
      */
     public function __isset($key)
     {
-        if (!$this->offsetExists($key)) {
+        if (!$this->offsetExists($this->getItemName($key))) {
             return $this->getterExists($key);
         }
 
@@ -380,7 +380,7 @@ class Decorator implements Arrayable, ArrayAccess, Countable, IteratorAggregate,
      */
     public function offsetExists($key)
     {
-        return array_key_exists($key, $this->get());
+        return isset($this->get()[$key]);
     }
 
     /**
@@ -431,8 +431,8 @@ class Decorator implements Arrayable, ArrayAccess, Countable, IteratorAggregate,
     {
         $keys = is_array($key) ? $key : func_get_args();
 
-        foreach ($keys as $value) {
-            if (!$this->offsetExists($value)) {
+        foreach ($keys as $key) {
+            if (!array_key_exists($this->getItemName($key), $this->get())) {
                 return false;
             }
         }
@@ -560,12 +560,10 @@ class Decorator implements Arrayable, ArrayAccess, Countable, IteratorAggregate,
      */
     public function getItemName($key)
     {
-        if (!$this->offsetExists($key)) {
-            $method = Str::camel("get_as_{$key}");
+        $method = Str::camel("get_as_{$key}");
 
-            if (method_exists($this, $method)) {
-                return $this->{$method}();
-            }
+        if (method_exists($this, $method)) {
+            return $this->{$method}();
         }
 
         return $key;

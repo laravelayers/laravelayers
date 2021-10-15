@@ -1089,6 +1089,10 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
                 $value['group'] = 'filter';
             }
 
+            if (is_null($value['value'] ?? null)) {
+                $value['value'] = request()->get($value['name']);
+            }
+
             $elements[$key] = $this->prepareElement($value);
         }
 

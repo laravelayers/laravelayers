@@ -37,7 +37,13 @@ trait Files
             $name = pathinfo($file, PATHINFO_FILENAME);
 
             if (!$prefix || Str::startsWith($name, $prefix) || $name == $_prefix) {
-                $urls[] = $disk->url($file);
+                $url = $disk->url($file);
+
+                if (!filter_var($url, FILTER_VALIDATE_URL)) {
+                    $url = $disk->path($file);
+                }
+
+                $urls[] = $url;
             }
         }
 
