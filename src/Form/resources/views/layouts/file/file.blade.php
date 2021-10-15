@@ -4,7 +4,7 @@
 
     <label id="label_file_{{ $element->id }}" for="{{ $element->id }}"
            class="button {{ $class ?? '' }} {{ $element->class }}"
-            {{ $element->getAttributes('disabled') ? 'disabled' : '' }}>
+            {{ !is_null($element->getAttributes('disabled')) ? 'disabled' : '' }}>
         @if (!$element->reverse){!! $element->icon ?: ($icon ?? '') !!}@endif
         {{ $element->text ?: trans('form::form.file.upload_' . ($element->multiple ? 'multiple' : 'once')) }}
         @if ($element->reverse){!! $element->icon ?: ($icon ?? '') !!}@endif

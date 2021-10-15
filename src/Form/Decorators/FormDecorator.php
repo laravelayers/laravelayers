@@ -713,7 +713,7 @@ class FormDecorator extends CollectionDecorator
                         }
 
                         $this->getData()->put($key, $element);
-                    } elseif (isset($source[$name])) {
+                    } elseif ($source && $source->has($name)) {
                         if ($source[$name] instanceof Carbon) {
                             $source->put($name, $source[$name]->setTimeFromTimeString($value));
                         } else {
