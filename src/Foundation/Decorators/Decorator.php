@@ -255,7 +255,7 @@ class Decorator implements Arrayable, ArrayAccess, Countable, IteratorAggregate,
      */
     public function __isset($key)
     {
-        if (!$this->offsetExists($this->getItemName($key))) {
+        if (!$this->offsetExists($key)) {
             return $this->getterExists($key);
         }
 
@@ -380,7 +380,7 @@ class Decorator implements Arrayable, ArrayAccess, Countable, IteratorAggregate,
      */
     public function offsetExists($key)
     {
-        return isset($this->get()[$key]);
+        return isset($this->get()[$this->getItemName($key)]);
     }
 
     /**
