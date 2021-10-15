@@ -131,12 +131,8 @@ trait Files
                 $name = is_null($name)
                     ? $this->getFilePrefix($prefix) . $this->getFileName($file)
                     : rtrim($this->getFilePrefix($prefix) . $name, '_') . '.' . $file->getClientOriginalExtension();
-
-                $url = Storage::disk($disk)->url($path . $name);
-
-                if (!filter_var($url, FILTER_VALIDATE_URL)) {
-                    $url = Storage::disk($disk)->path($path . $name);
-                }
+            } elseif ($file) {
+                $name = pathinfo($file, PATHINFO_BASENAME);
             }
 
             $this->uploadedFiles[] = ['file' => $file, 'disk' => $disk, 'path' => $path, 'name' => $name];

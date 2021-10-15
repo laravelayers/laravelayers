@@ -28,7 +28,7 @@ trait Images
                 foreach($files as $uploaded) {
                     if ($uploaded->file instanceof UploadedFile) {
                         $uploaded->file->storeAs($uploaded->path, $uploaded->sizes->first()->name, $uploaded->disk);
-                    } elseif (!$uploaded->size) {
+                    } elseif ($uploaded->sizes->isEmpty()) {
                         Storage::disk($uploaded->disk)->delete($uploaded->path . $uploaded->file);
 
                         $idDeleted = true;

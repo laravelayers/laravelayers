@@ -685,7 +685,7 @@ class FormDecorator extends CollectionDecorator
                                 $prefixedKey .= '.*';
                             }
 
-                            if (!$files && strpos(implode(',', (array) $element['rules']), 'required') === false) {
+                            if (empty($files[$name]) && strpos(implode(',', (array) $element['rules']), 'required') === false) {
                                 $element['rules'] = '';
                             }
                         }
