@@ -172,7 +172,7 @@ class FormElementDecorator extends DataDecorator implements FormElementContract,
             return $this->getNameByValue($value);
         }
 
-        $name = Str::snake($this->get('name'));
+        $name = $this->get('name');
 
         if ($this->getElementPrefix()) {
             $name = "{$this->getElementPrefix()}[{$name}]";
