@@ -57,7 +57,7 @@ trait Sorting
         $sortingMethod = $this->getSortingMethod(key($this->getSorting()), $method);
 
         if ($sortingMethod == $method) {
-            if ((clone $this->repository)->fill()->has(key($this->getSorting()))) {
+            if (array_key_exists(key($this->getSorting()), (clone $this->repository)->fill()->get())) {
                 $column = key($this->getSorting());
             }
         }

@@ -320,7 +320,11 @@ class Repository
      */
     public function destroy($ids)
     {
-        return $this->model->destroy($ids);
+        $result = $this->model->destroy($ids);
+
+        $this->decorate([]);
+
+        return $result;
     }
 
     /**

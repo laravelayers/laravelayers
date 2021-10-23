@@ -37,30 +37,24 @@ trait Images
     {
         $storage = Storage::disk($disk);
 
-        $prefix = $this->getFilePrefix($prefix);
+        $filePrefix = $this->getFilePrefix($prefix);
 
-        $_prefix = rtrim($prefix, '_');
+        $filePrefixName = rtrim($filePrefix, '_');
 
         $urls = [];
 
         foreach ($storage->files($path) as $file) {
             $name = pathinfo($file, PATHINFO_FILENAME);
 
-            if (!$prefix || Str::startsWith($name, $prefix) || $name == $_prefix) {
+            if (!$filePrefix || Str::startsWith($name, $filePrefix) || $name == $filePrefixName) {
                 $urls[] = $storage->url($file);
             }
         }
 
         if ($urls && !$this->uploadedImages) {
-            $uploaded = $this->setUploadedImage(end($urls), $disk, '', null);
+            $this->setUploadedImage(end($urls), $disk, $path, $prefix);
 
-            if ($uploaded->getUploadedImages()->sizes->isEmpty()) {
-                $uploaded = $uploaded->setImageSize();
-            }
-
-            $uploaded = $uploaded->getUploadedImages();
-
-            $this->uploadedImages = ['stored' => $uploaded];
+            $this->uploadedImages = ['stored' => $this->getUploadedImages()];
         }
 
         return $urls;
@@ -76,18 +70,24 @@ trait Images
     {
         $uploaded = $this->getUploadedImages();
 
-        if ($uploaded['file']) {
-            if (!$size && !is_null($size)) {
-                $size = 'default';
-            }
+        if (!$uploaded instanceof CollectionDecorator) {
+            $uploaded = [$uploaded];
+        }
 
-            if ($size) {
-                return $uploaded['sizes'][$size]['url'] ?? null;
-            }
+        foreach($uploaded as $file) {
+            if (isset($file['file'])) {
+                if (!$size && !is_null($size)) {
+                    $size = 'default';
+                }
 
-            foreach ($uploaded['sizes'] as $key => $value) {
-                if (!empty($value['url'])) {
-                    $urls[$key] = $value['url'];
+                if ($size) {
+                    return $file['sizes'][$size]['url'] ?? null;
+                }
+
+                foreach ($file['sizes'] as $key => $value) {
+                    if (!empty($value['url'])) {
+                        $urls[$key] = $value['url'];
+                    }
                 }
             }
         }
@@ -109,7 +109,6 @@ trait Images
         }
 
         return DataDecorator::make($this->uploadedImages);
-
     }
 
     /**
@@ -128,21 +127,27 @@ trait Images
             return $this->setUploadedImage($files, $disk, $path, $prefix);
         }
 
+        if (!$files) {
+            $files = $this->getStoredImages($disk, $path, $prefix);
+        }
+
         foreach($files as $file) {
+            $this->uploadedImages = [];
+
             if ($file instanceof UploadedFile) {
-                $this->setUploadedImage($file, $disk, $path, null)->setImageSize(pathinfo($file->hashName(), PATHINFO_FILENAME));
-
-                $uploaded[] = $this->setUploadedImage($file, $disk, $path, null)
-                    ->setImageSize(pathinfo($this->getImageName($file), PATHINFO_FILENAME))
-                    ->getUploadedImages();
-
-                $urls[] = current($this->getImageUrls());
+                $size = pathinfo($this->getImageName($file), PATHINFO_FILENAME);
             } else {
-                $uploaded[] = $this->setUploadedImage(basename($file), $disk, $path, null)
-                    ->getUploadedImages();
-
-                $urls[] = $file;
+                $file = basename($file);
+                $size = Str::after(pathinfo($file, PATHINFO_FILENAME), $this->getImagePrefix());
             }
+
+            $this->setUploadedImage($file, $disk, $path, $prefix);
+
+            $uploaded[] = $this->setUploadedImage($file, $disk, $path, $prefix)
+                ->setImageSize($size, 0, 0, 100)
+                ->getUploadedImages();
+
+            $urls[] = current($this->getImageUrls());
         }
 
         $this->uploadedImages = collect($uploaded ?? []);
@@ -161,27 +166,35 @@ trait Images
      */
     protected function setUploadedImage($file, $disk, $path = '', $prefix = null)
     {
-        if (!empty($this->uploadedImages['file'])) {
-            if (!$this->uploadedImages['file'] instanceof UploadedFile) {
-                $this->uploadedImages['stored'] = $this->uploadedImages;
-            }
+        if ($file instanceof UploadedFile) {
+            $extension = $file->getClientOriginalExtension();
         } else {
-            if (!$file instanceof UploadedFile) {
-                $extension = pathinfo($file, PATHINFO_EXTENSION);
+            if (!empty($this->uploadedImages['file']) && !$this->uploadedImages['file'] instanceof UploadedFile) {
+                $stored = $this->uploadedImages;
+            } elseif (!empty($this->uploadedImages['stored'])) {
+                $stored = $this->uploadedImages['stored'];
+            }
 
-                if ($file && !$extension) {
-                    $extension = $file;
-                    $file = '';
-                }
+            $extension = pathinfo($file, PATHINFO_EXTENSION);
+
+            if ($file && !$extension) {
+                $extension = $file;
+                $file = '';
             }
         }
 
-        $this->uploadedImages['file'] = $file;
-        $this->uploadedImages['disk'] = $disk;
-        $this->uploadedImages['path'] = ($path = trim($path, '/')) ? "{$path}/" : '';
-        $this->uploadedImages['prefix'] = $prefix;
-        $this->uploadedImages['extension'] = $extension ?? null;
-        $this->uploadedImages['sizes'] = collect([]);
+        $this->uploadedImages = [
+            'file' => $file,
+            'disk' => $disk,
+            'path' => ($path = trim($path, '/')) ? "{$path}/" : '',
+            'prefix' => $prefix,
+            'extension' => $extension,
+            'sizes' => collect([])
+        ];
+
+        if (!empty($stored)) {
+            $this->uploadedImages['stored'] = $stored;
+        }
 
         return $this;
     }

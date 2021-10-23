@@ -24,11 +24,11 @@ trait Images
         $files = $item->getUploadedImages();
 
         if ($files instanceof CollectionDecorator) {
-            if ($this->getResult() || $forced) {
+            if ($this->getResult()->isNotEmpty() || $forced) {
                 foreach($files as $uploaded) {
                     if ($uploaded->file instanceof UploadedFile) {
                         $uploaded->file->storeAs($uploaded->path, $uploaded->sizes->first()->name, $uploaded->disk);
-                    } elseif ($uploaded->sizes->isEmpty()) {
+                    } elseif ($uploaded->file) {
                         Storage::disk($uploaded->disk)->delete($uploaded->path . $uploaded->file);
 
                         $idDeleted = true;

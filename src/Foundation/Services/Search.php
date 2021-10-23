@@ -45,7 +45,7 @@ trait Search
             $searchMethod = $this->getSearchMethod($request->get($field), $method);
 
             if ($searchMethod == $method) {
-                if ((clone $this->repository)->fill()->has($request->get($field))) {
+                if (array_key_exists($request->get($field), (clone $this->repository)->fill()->get())) {
                     $column = $request->get($field);
                 }
             }

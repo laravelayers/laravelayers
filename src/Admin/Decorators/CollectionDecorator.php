@@ -5,6 +5,7 @@ namespace Laravelayers\Admin\Decorators;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Laravelayers\Contracts\Admin\Decorators\Actions as ActionsContract;
@@ -90,7 +91,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
                 $string .= $actions->render();
             }
 
-            if (request()->has(Service::getSearchName())) {
+            if (Request::has(Service::getSearchName())) {
                 $elements->setWarning(static::trans('admin::alerts.not_found'));
             }
         }
@@ -389,7 +390,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
      */
     protected function getColumnSorting(&$data)
     {
-        $sorting = request()->route()->getController()->getSorting() ?: [];
+        $sorting = Request::route()->getController()->getSorting() ?: [];
 
         if (!isset($data['desc'])) {
             $data['desc'] = 1;
@@ -411,7 +412,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
 
             if (!$this->getCurrentAction('multiple') && is_null($data['link'] ?? null)) {
                 $data['link'] = url()->current() . '?' . http_build_query(
-                        array_merge(request()->query(), [
+                        array_merge(Request::query(), [
                             Service::getSortingName() => $data['sort'],
                             Service::getSortingDescName() => $data['desc'] ? 0 : 1
                         ])
@@ -604,7 +605,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
      */
     protected function getFormActionLink($data)
     {
-        $data['httpQuery'] = array_merge(request()->except([
+        $data['httpQuery'] = array_merge(Request::except([
             'action', '_token', '_method', FormDecorator::getElementsPrefixName(), PreviousUrl::getInputName()
         ]), $data['httpQuery'] ?? []);
 
@@ -724,7 +725,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
     {
         return [
             'type' => 'add',
-            'link' => request()->route()->getName(),
+            'link' => Request::route()->getName(),
             'httpQuery' => [
                 'action' => 'add'
             ],
@@ -874,7 +875,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
     {
         return [
             'method' => 'GET',
-            'action' => request()->url(),
+            'action' => Request::url(),
             'data-form-beforeunload' => '',
             'class' => 'form-beforeunload'
         ];
@@ -1015,7 +1016,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
      */
     protected function getSearchOptionSelected(&$data)
     {
-        if (request(Service::getSearchByName()) == $data['name']) {
+        if (Request::get(Service::getSearchByName()) == $data['name']) {
             $data['selected'] = true;
         }
 
@@ -1034,7 +1035,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
                 'type' => 'search.group',
                 'name' => Service::getSearchName(),
                 'label' => static::transOfElement("search_label", [], true),
-                'value' => request(Service::getSearchName()),
+                'value' => Request::get(Service::getSearchName()),
                 'line' => 'search',
                 'group' => 'search'
             ],
@@ -1090,7 +1091,11 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
             }
 
             if (is_null($value['value'] ?? null)) {
-                $value['value'] = request()->get($value['name']);
+                $value['value'] = Request::get($value['name']);
+            } elseif ($value['value'] instanceof BaseCollectionDecorator) {
+                if (Request::has($value['name']) && $value['value']->getSelectedItems()->isEmpty()) {
+                    $value['value'] = $value['value']->setSelectedItems(Request::get($value['name']));
+                }
             }
 
             $elements[$key] = $this->prepareElement($value);
@@ -1205,7 +1210,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
         return [
             'filter_link' => [
                 'type' => 'search.group',
-                'value' => request(Service::getSearchName()),
+                'value' => Request::get(Service::getSearchName()),
                 'placeholder' => static::transOfElement('filter_link_placeholder'),
                 'icon' => 'icon-filter',
             ],
@@ -1245,7 +1250,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
                         'link' => PreviousUrl::addQueryHash(URL::current())
                     ],
                 ],
-                'hidden' => !request()->has(Service::getSearchName())
+                'hidden' => !Request::has(Service::getSearchName())
             ],
         ];
     }
@@ -1293,7 +1298,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
 
             if (is_array($value['link'])) {
                 $query = $value['link'];
-                $value['link'] = request()->fullUrlWithQuery(array_merge(['search' => ''], $value['link']));
+                $value['link'] = Request::fullUrlWithQuery(array_merge(['search' => ''], $value['link']));
             }
 
             if (is_null($class)) {
@@ -1303,14 +1308,14 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
             $data[$key] = $value;
 
             if (!empty($query)) {
-                foreach (request()->query() as $queryKey => $queryValue) {
+                foreach (Request::query() as $queryKey => $queryValue) {
                     if (isset($query[$queryKey]) && $query[$queryKey] == $queryValue) {
                         unset($query[$queryKey]);
 
                         if (!$query) {
                             $data[$key]['disabled'] = '';
-                            $data[$key]['link'] = request()->fullUrlWithQuery([
-                                'search' => strlen(request()->search) ? request()->search : null,
+                            $data[$key]['link'] = Request::fullUrlWithQuery([
+                                'search' => strlen(Request::get('search')) ? Request::get('search') : null,
                                 'role' => null
                             ]);
                         }
