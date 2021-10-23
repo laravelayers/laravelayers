@@ -46,4 +46,16 @@ trait Form
     {
         return app(FormDecorator::class, [$elements])->getElements($this);
     }
+
+    /**
+     * Add the form element.
+     *
+     * @param $name
+     * @return FormElementDecorator
+     */
+    protected function addElement($name)
+    {
+        return FormElementDecorator::make($name);
+
+    }
 }

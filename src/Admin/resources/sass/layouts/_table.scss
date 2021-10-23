@@ -54,7 +54,7 @@
   $table-foot-row-hover: darken($table-foot-background, $table-hover-scale) !global;
 
   @include table($table-stripe);
-  @include table-scroll;
+  //@include table-scroll;
   @include table-hover;
   //@include table-stack($show-header-for-stacked);
 
@@ -110,6 +110,17 @@
       .form-error.is-visible {
         display: none !important;
       }
+
+      .image {
+        max-width: 100px;
+        text-align: center;
+
+        .thumbnail {
+          max-height: 100px;
+          margin-bottom: unset;
+          box-shadow: unset;
+        }
+      }
     }
   }
 
@@ -119,6 +130,7 @@
 
   .dropdown-button {
     position: static;
+    max-width: 120px;
 
     .button-group {
       flex-wrap: nowrap;
@@ -135,11 +147,5 @@
         white-space: nowrap;
       }
     }
-  }
-
-  .thumbnail {
-    max-height: 100px;
-    margin-bottom: unset;
-    box-shadow: unset;
   }
 }

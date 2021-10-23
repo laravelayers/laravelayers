@@ -49,7 +49,15 @@
 
     @slot('value')
 
-        {{ $tree->value->getSelectedItems('formElementText', ',') }}
+        @if ($tree->value->first() && $tree->value->first()->has('value') && $tree->getAttributes('data-ajax-url'))
+
+            {{ $tree->value->implode('value', ', ') }}
+
+        @else
+
+            {{ $tree->value->getSelectedItems('formElementText', ',') }}
+
+        @endif
 
     @endslot
 

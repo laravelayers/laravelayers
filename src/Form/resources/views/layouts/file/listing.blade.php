@@ -27,7 +27,7 @@
             @foreach($element->value as $value)
 
                 <nobr>
-                    <input type="checkbox" checked name="{{ $element->getName() }}"
+                    <input type="checkbox" name="{{ $element->getName() }}"
                            value="{{ basename($value->value) }}"
                             {{ !is_null($element->getAttributes('disabled')) ? 'disabled' : '' }}>
                     <label><a href="{{ $value->value }}" target="_blank">{{ basename($value->value) }}</a></label>

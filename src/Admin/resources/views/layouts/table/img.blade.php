@@ -1,6 +1,6 @@
 @if (e($slot))
 
-    <div data-toggle="{{ $id = uniqid() }}" class="{{ !empty($class) ? $class : 'text-center' }}">
+    <div data-toggle="{{ $id = uniqid() }}" class="image {{ !empty($class) ? $class : 'text-center' }}">
         <img src="{{ $slot }}" class="thumbnail">
     </div>
 
@@ -9,6 +9,12 @@
         <button class="close-button" data-close aria-label="Close reveal" type="button">
             <span aria-hidden="true">&times;</span>
         </button>
+    </div>
+
+@else
+
+    <div class="image text-center">
+        &mdash;
     </div>
 
 @endif

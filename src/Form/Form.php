@@ -137,6 +137,14 @@ class Form implements FormContract
         $attributes = collect([]);
         $attributeStr = '';
 
+        if (isset($element['attributes'])) {
+            foreach ($element['attributes'] as $name => $value) {
+                $attributes[$name] = $value;
+            }
+
+            unset($element['attributes']);
+        }
+
         $element = Arr::except($element, array_diff($this->parameters, $parameters));
 
         foreach($element as $key => $value) {
