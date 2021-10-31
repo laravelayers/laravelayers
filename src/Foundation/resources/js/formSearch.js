@@ -114,6 +114,20 @@ class FormSearch {
                 }
 
                 _this.$pane.prepend(data);
+
+                if (_this.options.searchElement) {
+                    _this.$pane.find(_this.options.searchElement).each(function (index, element) {
+                        if (!$(this).find('a').length) {
+                            $(this).html('<a>' + $(this).html() + '</a>');
+                        }
+
+                        $(this).on('click', function () {
+                            _this.$input.val($(this).text().trim());
+                            _this.$wrapper.removeClass('active');
+                            _this.$pane.foundation('close');
+                        });
+                    });
+                }
             } else {
                 if (_this.$wrapper.hasClass('active')) {
                     _this.$wrapper.removeClass('active');
@@ -143,6 +157,14 @@ FormSearch.defaults = {
      * @default ''
      */
     ajaxUrl: '',
+
+    /**
+     * An element with a search text option.
+     * @option
+     * @type {string}
+     * @default 'li'
+     */
+    searchElement: 'li',
 };
 
 export {FormSearch};

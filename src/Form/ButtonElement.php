@@ -2,6 +2,7 @@
 
 namespace Laravelayers\Form;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Lang;
 use InvalidArgumentException;
 
@@ -24,6 +25,12 @@ trait ButtonElement
         }
 
         foreach ($element['value'] as $key => $value) {
+            if ($value instanceof Collection) {
+                $prepared = true;
+
+                break;
+            }
+
             if (is_numeric($value) || is_string($value)) {
                 $value = [
                     'value' => $key,
@@ -42,7 +49,9 @@ trait ButtonElement
             $element['value'][$key] = $this->prepareButtonElement($value);
         }
 
-        $element['value'] = $this->prepareButtonElementValue($element['value']);
+        if (empty($prepared)) {
+            $element['value'] = $this->prepareButtonElementValue($element['value']);
+        }
 
         return $element;
     }

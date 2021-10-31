@@ -681,12 +681,18 @@ class FormDecorator extends CollectionDecorator
 
                     if(!empty($element['rules'])) {
                         if ($type == 'file') {
-                            if (!empty($element['multiple'])) {
-                                $prefixedKey .= '.*';
+                            $file_required = strpos(implode(',', (array) $element['rules']), 'required');
+
+                            if (empty($files[$name]) && $file_required === false) {
+                                $element['rules'] = '';
                             }
 
-                            if (empty($files[$name]) && strpos(implode(',', (array) $element['rules']), 'required') === false) {
-                                $element['rules'] = '';
+                            if (!empty($element['multiple'])) {
+                                if ($file_required !== false) {
+                                    $this->addRules($prefixedKey, 'required');
+                                }
+
+                                $prefixedKey .= '.*';
                             }
                         }
 
