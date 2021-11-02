@@ -553,7 +553,7 @@ trait DataDecorator
      */
     public function getRenderer($key, $text = false)
     {
-        if (!$text && $this->getElements()->has($key) && !is_null($this->getMultipleElements($key))) {
+        if (!$text && !is_null($this->getMultipleElements($key)) && $this->getElements()->has($key)) {
             $element = $this->getElements()->{$key};
 
             if (is_null($element->getAttributes('disabled'))) {

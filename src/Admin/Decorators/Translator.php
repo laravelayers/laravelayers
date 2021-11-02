@@ -65,8 +65,7 @@ trait Translator
         }
 
         if (!$isTransKey) {
-            $transKey = '/lang/' . app()->getLocale() . '/' . $transKey;
-
+            $transKey = '/lang/' . app()->getLocale() . '/' . trim($transKey, '/');
         }
 
         return (!$empty || $isTransKey)

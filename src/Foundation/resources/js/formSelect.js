@@ -438,7 +438,7 @@ class FormSelect {
     _add() {
         var $active = this.$wrapper.find('li.active').not('.is-disabled');
 
-        if (this.isChanged) {
+        if (!this.isDelayedInit && this.isChanged) {
             this.$element.parents('form').attr('data-unsaved', true);
         }
 

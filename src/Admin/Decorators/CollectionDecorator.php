@@ -1016,8 +1016,8 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
      */
     protected function getSearchOptionSelected(&$data)
     {
-        if (Request::get(Service::getSearchByName()) == $data['name']) {
-            $data['selected'] = true;
+        if ($name = Request::get(Service::getSearchByName())) {
+            $data['selected'] = $name == $data['name'] ?: false;
         }
 
         return $data;
