@@ -126,6 +126,8 @@
 
   .button {
     @extend .small;
+
+    max-width: 120px;
   }
 
   .dropdown-button {
