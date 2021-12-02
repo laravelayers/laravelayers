@@ -126,13 +126,14 @@
 
   .button {
     @extend .small;
+  }
 
+  .dropdown-button, div > a.button.expanded {
     max-width: 120px;
   }
 
   .dropdown-button {
     position: static;
-    max-width: 120px;
 
     .button-group {
       flex-wrap: nowrap;
@@ -146,6 +147,7 @@
 
       .button {
         @extend .small;
+
         white-space: nowrap;
       }
     }

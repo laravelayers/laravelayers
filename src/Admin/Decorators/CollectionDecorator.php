@@ -358,7 +358,7 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
      */
     protected function getColumnText(&$data)
     {
-        if (empty($data['text'])) {
+        if (is_null($data['text'] ?? null)) {
             $data['text'] = static::transOfColumn("{$data['column']}_text", [], true);
         }
 
@@ -1096,6 +1096,41 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
                 if (Request::has($value['name']) && $value['value']->getSelectedItems()->isEmpty()) {
                     $value['value'] = $value['value']->setSelectedItems(Request::get($value['name']));
                 }
+            } elseif (in_array($type = explode('.', $value['type'])[0], ['checkbox', 'radio', 'select'])) {
+                if (is_array($value['value'])) {
+                    if (Request::has($value['name'])) {
+                        $request = Request::get($value['name']);
+
+                        foreach ($value['value'] as $value_key => $value_item) {
+                            if (!is_array($value_item)) {
+                                $value_item = ['value' => $value_item];
+                                $value['value'][$value_key] = $value_item;
+                            }
+
+                            if (is_array($request)) {
+                                if (isset($request[$value_key])) {
+                                    $value['value'][$value_key]['selected'] = true;
+                                }
+                            } elseif (isset($value_item['value']) && $request == $value_item['value']) {
+                                $value['value'][$value_key]['selected'] = true;
+                            } else {
+                                $value['value'][$value_key]['selected'] = false;
+                            }
+                        }
+                    } elseif ($type !== 'select') {
+                        $first = current($value['value']);
+
+                        if (!is_array($first)) {
+                            $first = ['value' => $first];
+                        }
+
+                        if (!isset($first['selected']) && !isset($first['checked'])) {
+                            $value['value'][key($value['value'])] = array_merge($first, ['selected' => true]);
+                        }
+                    }
+                } elseif (Request::has($value['name'])) {
+                    $value['checked'] = true;
+                }
             }
 
             $elements[$key] = $this->prepareElement($value);
@@ -1250,7 +1285,13 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
                         'link' => PreviousUrl::addQueryHash(URL::current())
                     ],
                 ],
-                'hidden' => !Request::has(Service::getSearchName())
+                'hidden' => Request::except([
+                    $this->getPageName(),
+                    Service::getSortingName(),
+                    Service::getSortingDescName(),
+                    PreviousUrl::getInputName(),
+                    'action'
+                ]) ? false : true
             ],
         ];
     }

@@ -116,9 +116,9 @@ class Decorator implements Arrayable, ArrayAccess, Countable, IteratorAggregate,
             $propertyName = Str::camel($name);
 
             if (property_exists($this, $propertyName)) {
-                if ($value) {
-                    $this->$propertyName = is_array($value)
-                        ? array_merge((array) $this->$propertyName, $value)
+                if ($value && empty($this->{$propertyName})) {
+                    $this->{$propertyName} = is_array($value)
+                        ? array_merge((array) $this->{$propertyName}, $value)
                         : $value;
                 }
 
@@ -129,7 +129,7 @@ class Decorator implements Arrayable, ArrayAccess, Countable, IteratorAggregate,
         foreach (get_object_vars($data) as $name => $value) {
             $name = Str::camel($name);
             if (property_exists($this, $name)) {
-                $this->$name = $value;
+                $this->{$name} = $value;
             }
         }
     }
