@@ -98,7 +98,7 @@ trait Images
     /**
      * Get the uploaded images before store on a filesystem disk.
      *
-     * @return CollectionDecorator
+     * @return DataDecorator|CollectionDecorator
      */
     public function getUploadedImages()
     {
@@ -118,7 +118,6 @@ trait Images
      * @param string $disk
      * @param string $path
      * @param string|null $prefix
-     * @param bool $ajax
      * @return array|$this
      */
     public function setUploadedImages($files, $disk, $path = '', $prefix = null)
@@ -243,6 +242,10 @@ trait Images
             if ($url) {
                 $this->setUploadedImage($url, $disk, $path, $prefix);
             }
+        }
+
+        if (empty($url)) {
+            $this->setUploadedImage(null, $disk, $path, $prefix);
         }
 
         return $url ?? '';
