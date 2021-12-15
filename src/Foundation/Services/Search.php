@@ -41,7 +41,7 @@ trait Search
             static::setSearchByName($field);
         }
 
-        if ($search = $this->prepareSearch($request->get($name))) {
+        if (strlen($search = $this->prepareSearch($request->get($name)))) {
             $searchMethod = $this->getSearchMethod($request->get($field), $method);
 
             if ($searchMethod == $method) {
