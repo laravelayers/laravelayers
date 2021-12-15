@@ -34,24 +34,36 @@ import validator from 'validator';
         }
 
         if (typeof $init.options === 'string') {
-            let $options = $init.options.split(',');
+            $init.options = $init.options.trim();
 
-            $init.options = '';
+            if ($init.options.search(/^\/.*\/[a-z]?$/i) !== -1) {
+                let flags = $init.options.replace(/.*\/([gimy]*)$/, '$1');
+                let pattern = $init.options.replace(new RegExp('^/(.*?)/'+flags+'$'), '$1');
 
-            for (let i = 0; i < $options.length; i++) {
-                let name = $options[i].split(':');
+                $init.options = new RegExp(pattern, flags);
+            }
+            else if ($init.options.search(/^\{.*\}$/) !== -1) {
+                $init.options = $init.options.replace(/^\{(.*)\}$/, '$1');
 
-                name[0] = `"${name[0].replace(/'/g, '').trim()}"`;
-                name[1] = name[1].trim();
+                let $options = $init.options.split(',');
 
-                if (name[1].charAt(0) === "'") {
-                    name[1] = `"${name[1].replace(/'/g, '').trim()}"`;
+                $init.options = '';
+
+                for (let i = 0; i < $options.length; i++) {
+                    let name = $options[i].split(':');
+
+                    name[0] = `"${name[0].replace(/'/g, '').trim()}"`;
+                    name[1] = name[1].trim();
+
+                    if (name[1].charAt(0) === "'") {
+                        name[1] = `"${name[1].replace(/'/g, '').trim()}"`;
+                    }
+
+                    $init.options += ($init.options ? ',' : '') + `${name[0]}:${name[1]}`;
                 }
 
-                $init.options += ($init.options ? ',' : '') + `${name[0]}:${name[1]}`;
+                $init.options = JSON.parse(`{${$init.options}}`);
             }
-
-            $init.options = JSON.parse(`{${$init.options}}`);
         }
 
         return $init;
@@ -204,7 +216,10 @@ import validator from 'validator';
         }
 
         let validatorName = $el.data('validatorName').replace(/^is/i, '');
-        validatorName = 'is' + validatorName.charAt(0).toUpperCase() + validatorName.substr(1);
+
+        if (!validator[validatorName]) {
+            validatorName = 'is' + validatorName.charAt(0).toUpperCase() + validatorName.substr(1);
+        }
 
         return (validator[validatorName]($el.val(), $init.options));
     };
