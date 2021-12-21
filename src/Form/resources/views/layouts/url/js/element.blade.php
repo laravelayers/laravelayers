@@ -1,4 +1,4 @@
-@component("form::layouts.text.group.group", ['element' => $element, 'reverse' => false])
+@component("form::layouts.text.group.group", ['element' => $element, 'reverse' => false, 'type' => 'text'])
 
     @slot('icon')
 
