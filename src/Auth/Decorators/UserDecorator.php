@@ -44,7 +44,7 @@ class UserDecorator extends DataDecorator implements
      *
      * @var string
      */
-    protected $emailVerifiedAtColumn = 'email_verified_at';
+    protected $emailVerifiedAtColumn;
 
     /**
      * The column name of the "password".
