@@ -1,4 +1,4 @@
-<a href="{{ $button->link }}"
+<a {!! !$button->getAttributes('disabled') ? 'href="' . $button->link . '"' : '' !!}
    id="{{ $element->getId($button) }}"
    class="button {{ $class ?? '' }} {{ $button->class ?: 'hollow' }}"
         {!! isset($external) && e($external) ? 'target="_blank"' : '' !!}

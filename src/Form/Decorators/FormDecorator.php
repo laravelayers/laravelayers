@@ -585,6 +585,9 @@ class FormDecorator extends CollectionDecorator
 
         $this->setSuccess(null);
 
+        $this->getRequest()->session()
+                ->forget(PreviousUrl::getRedirectInputName());
+
         $validator->validate();
 
         $this->setSuccess($success);

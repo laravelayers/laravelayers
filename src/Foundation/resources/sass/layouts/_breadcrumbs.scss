@@ -28,6 +28,11 @@
     li > a {
       background: transparent;
       color: $breadcrumbs-item-color;
+
+      &.disabled {
+        color: $breadcrumbs-item-color-disabled;
+        cursor: not-allowed;
+      }
     }
 
     li li {
@@ -40,11 +45,20 @@
     > li.is-dropdown-submenu-parent.disabled > a::after { // sass-lint:disable-line no-qualifying-elements
       @include css-triangle($dropdownmenu-arrow-size, $breadcrumbs-item-color-disabled, down);
     }
+
+    > li.is-dropdown-submenu-parent > a.disabled::after { // sass-lint:disable-line no-qualifying-elements
+      @include css-triangle($dropdownmenu-arrow-size, $breadcrumbs-item-color-disabled, down);
+    }
   }
 
   li > a:not([href]) {
     color: inherit !important;
     text-decoration: none;
     cursor: inherit;
+  }
+
+  li > a.disabled:not([href]) {
+    color: $breadcrumbs-item-color-disabled !important;
+    cursor: not-allowed;
   }
 }

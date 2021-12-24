@@ -63,7 +63,7 @@ trait Sorting
         }
 
         $direction = current($this->getSorting());
-        
+
         if (!empty($column)) {
             $this->repository->{$sortingMethod}($direction, $column);
         } else {

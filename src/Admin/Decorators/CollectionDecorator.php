@@ -1090,13 +1090,19 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
                 $value['group'] = 'filter';
             }
 
+            $type = explode('.', $value['type'])[0];
+
             if (is_null($value['value'] ?? null)) {
                 $value['value'] = Request::get($value['name']);
+
+                if (in_array($type, ['select']) && !is_array($value['value'])) {
+                    $value['value'] = [$value['value']];
+                }
             } elseif ($value['value'] instanceof BaseCollectionDecorator) {
                 if (Request::has($value['name']) && $value['value']->getSelectedItems()->isEmpty()) {
                     $value['value'] = $value['value']->setSelectedItems(Request::get($value['name']));
                 }
-            } elseif (in_array($type = explode('.', $value['type'])[0], ['checkbox', 'radio', 'select'])) {
+            } elseif (in_array($type, ['checkbox', 'radio', 'select'])) {
                 if (is_array($value['value'])) {
                     if (Request::has($value['name'])) {
                         $request = Request::get($value['name']);

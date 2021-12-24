@@ -350,8 +350,14 @@ trait Menu
         if ($path->isNotEmpty()) {
             $firstId = $path->first()->getNodeId();
 
-            $items = $path->getOriginal()->map(function ($item) {
-                return $item->put('url', '');
+            $last = $path->last();
+
+            $lastId = $last->isSelected ? $last->getNodeId() : 0;
+
+            $items = $path->getOriginal()->map(function ($item) use($lastId) {
+                return $lastId == $item->getNodeId()
+                    ? $item
+                    : $item->put('class', 'disabled');
             });
 
             $items->where('id', $firstId)
