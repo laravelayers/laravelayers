@@ -457,7 +457,7 @@ class FormDecorator extends CollectionDecorator
     }
 
     /**
-     * Render the form elements.
+     * Render form elements.
      *
      * @param string $string
      * @return \Illuminate\Support\HtmlString
@@ -466,64 +466,71 @@ class FormDecorator extends CollectionDecorator
     public function renderElements($string = '')
     {
         foreach ($this as $key => $element) {
-            $string .= $this->renderByElement($element);
+            if (!$element->getGroup() && !$element->getLine()) {
+                $rendered = $element->render();
+            } else {
+                if ($element->isRendered() || $element->getHidden()) {
+                    continue;
+                }
+
+                $rendered = '';
+
+                if ($element->getLine()) {
+                    $rendered = $this->renderGroupedElements($element);
+                }
+
+                if ($element->getGroup()) {
+                    $group = $this->where('group', $element->getGroup());
+
+                    foreach ($group as $groupElement) {
+                        if (!$groupElement->isRendered()) {
+                            if ($groupElement->getLine()) {
+                                $rendered .= $this->renderGroupedElements($groupElement);
+                            } else {
+                                $rendered .= $groupElement->render();
+                            }
+                        }
+                    }
+
+                    $rendered = view("form::layouts.fieldset.element")
+                        ->with(['slot' => new HtmlString($rendered), 'element' => $element])
+                        ->render();
+                }
+            }
+
+            $string .= $rendered;
         }
 
         return new HtmlString($string);
     }
 
     /**
-     * Render form elements by groups.
+     * Render grouped form elements.
      *
      * @param \Laravelayers\Form\Decorators\FormElementDecorator $element
-     * @return \Illuminate\Support\HtmlString
-     * @throws \Throwable
+     * @return string
      */
-    protected function renderByElement(FormElementDecorator $element)
+    protected function renderGroupedElements(FormElementDecorator $element)
     {
-        $group = $element->getGroup();
-        $line = $element->getLine();
-
-        if (!$group && !$line) {
-            return $element->render();
-        }
+        $line = $this->where('line', $element->getLine())->where('hidden', false);
 
         $string = '';
 
-        if (!$element->isRendered() && !$element->getHidden()) {
-            if ($line) {
-                $line = $this->where('line', $line)->where('hidden', false);
-
-                foreach ($line as $lineElement) {
-                    if (!$lineElement->getHidden()) {
-                        $string .= view("form::layouts.fieldset.column")
-                            ->with(['slot' => $lineElement->render(), 'element' => $element])
-                            ->render();
-                    }
-                }
-
-                if ($string) {
-                    $string = view("form::layouts.fieldset.line")
-                        ->with(['slot' => new HtmlString($string), 'element' => $element])
-                        ->render();
-                }
-            }
-            else {
-                $group = $this->where('group', $group);
-
-                foreach ($group as $groupElement) {
-                    $string .= $groupElement->render();
-                }
-            }
-
-            if ($group) {
-                $string = view("form::layouts.fieldset.element")
-                    ->with(['slot' => new HtmlString($string), 'element' => $element])
+        foreach ($line as $lineElement) {
+            if (!$lineElement->getHidden()) {
+                $string .= view("form::layouts.fieldset.column")
+                    ->with(['slot' => $lineElement->render(), 'element' => $element])
                     ->render();
             }
         }
 
-        return new HtmlString($string);
+        if ($string) {
+            $string = view("form::layouts.fieldset.line")
+                ->with(['slot' => new HtmlString($string), 'element' => $element])
+                ->render();
+        }
+
+        return $string;
     }
 
     /**
@@ -531,6 +538,7 @@ class FormDecorator extends CollectionDecorator
      *
      * @param array|\Traversable $items
      * @return \Illuminate\Contracts\Validation\Validator
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function validate($items = [])
     {
