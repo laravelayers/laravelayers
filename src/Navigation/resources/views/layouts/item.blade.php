@@ -1,7 +1,7 @@
 <li class="{{ $itemClass ?? '' }} {{ !$node->menuUrl ? 'disabled' : '' }}"
         {{ $itemAttributes ?? '' }}>
 
-    <a {!! ($node->menuUrl && !$node->isNodeSelected) ? 'href="' . $node->menuUrl . '"' : '' !!}
+    <a {!! ($node->menuUrl && !$node->isNodeSelected) ? 'href="' . $node->menuUrl . '"' : 'onclick="document.location.href=\'' . $node->menuUrl . '\';"' !!}
        class="{{ $node->menuClass }}">
 
         @if ($node->menuIcon)

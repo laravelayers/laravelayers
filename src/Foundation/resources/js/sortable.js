@@ -66,17 +66,21 @@ class Sortable {
                 });
 
                 return ui;
-            }
+            },
+            cancel: '.ui-sortable-disabled'
         });
 
         $thead.find('tr').prepend('<th><i class="icon icon-bars"></i></th>');
-        $tbodyTr.prepend('<td><i class="icon icon-bars"></i></td>');
+        $tbodyTr.not('.ui-sortable-disabled').prepend('<td><i class="icon icon-bars"></i></td>');
+        $tbodyTr.filter('.ui-sortable-disabled').prepend('<td><i class="icon icon-bars secondary"></i></td>');
         $tfoot.find('tr').prepend('<td></td>');
 
         $tbodyTr.each(function (i, element) {
             $(element).on('mouseover.foundation.sortable.tbodyTr', (event) => {
-                $(event.currentTarget).css('cursor', 'move');
-                $(event.currentTarget).css('cursor', 'move');
+                if (!$(event.currentTarget).hasClass('ui-sortable-disabled')) {
+                    $(event.currentTarget).css('cursor', 'move');
+                    $(event.currentTarget).css('cursor', 'move');
+                }
             });
         });
     }

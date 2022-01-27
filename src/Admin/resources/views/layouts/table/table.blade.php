@@ -79,7 +79,7 @@
 
             @endif
 
-                <tr>
+                <tr{!! $items->isSortableRows && !$item->getSorting() ? ' class="ui-sortable-disabled"' : '' !!}>
 
                     @if ($items->getActions()->checkbox && $item->getActions()->checkbox)
 
