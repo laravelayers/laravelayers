@@ -67,6 +67,7 @@ class Sortable {
 
                 return ui;
             },
+            items: "tr:not(.ui-sortable-disabled)",
             cancel: '.ui-sortable-disabled'
         });
 
