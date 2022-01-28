@@ -81,6 +81,7 @@ class FormDatetime {
 
         $options.altInput = true;
         $options.altFormat = this.options.altFormat;
+        $options.disableMobile = true;
 
         if (this.options.defaultDate) {
             $options.defaultDate = typeof this.options.defaultDate === 'string'
