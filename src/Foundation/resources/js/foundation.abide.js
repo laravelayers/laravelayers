@@ -42,7 +42,7 @@ import validator from 'validator';
 
                 $init.options = new RegExp(pattern, flags);
             }
-            else if ($init.options.search(/^\{.*\}$/) !== -1) {
+            else {
                 $init.options = $init.options.replace(/^\{(.*)\}$/, '$1');
 
                 let $options = $init.options.split(',');
