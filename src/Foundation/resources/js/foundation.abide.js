@@ -287,11 +287,15 @@ import validator from 'validator';
             this.$submits.off('click.zf.abide keydown.zf.abide')
                 .on('click.zf.abide keydown.zf.abide', (e) => {
                     if (!e.key || (e.key === ' ' || e.key === 'Enter')) {
-                        $(e.currentTarget).closest("form").append(
-                            $('<input>').attr('type', 'hidden')
-                                .attr('name', $(e.currentTarget).attr('name'))
-                                .attr('value', $(e.currentTarget).attr('value'))
-                        );
+                        if ($(e.currentTarget).attr('name')) {
+                            $(e.currentTarget).closest("form").append(
+                                $('<input>').attr('type', 'hidden')
+                                    .attr('name', $(e.currentTarget).attr('name'))
+                                    .attr('value', $(e.currentTarget).attr('value'))
+                            );
+
+                            $(e.currentTarget).attr('name', '');
+                        }
 
                         e.preventDefault();
 
