@@ -1,7 +1,7 @@
 @if ($items->getFilter()->isNotEmpty())
 
     <div class="grid-container full">
-        <div class="grid-x grid-padding-x align-middle">
+        <div class="grid-x grid-padding-x align-top">
 
             @if ($items->getFilterResetLink() && !$items->getFilterResetLink()->getHidden())
 
@@ -27,7 +27,7 @@
 
                     @endif
 
-                    {!! $items->getFilterLink() !!}
+                    {!! (clone $items->getFilterLink())->put('label', '')->put('help', '')->put('tooltip', '') !!}
 
                 @endcomponent
 
