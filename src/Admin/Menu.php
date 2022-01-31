@@ -385,6 +385,12 @@ trait Menu
             $path = static::$menu->get('path');
 
             foreach ($items as $key => $item) {
+                if (!empty($item['hidden'])) {
+                    unset($items[$key]);
+
+                    continue;
+                }
+
                 $item['parent'] = $path->last()->route;
 
                 if ((!isset($item['name']) || !isset($item['icon'])) && isset($item['route'])) {
@@ -397,11 +403,13 @@ trait Menu
                 $items[$key] = MenuItemDecorator::make($this->prepareMenuItem($item));
             }
 
-            $path = $path->getOriginal()
-                ->concat($items)
-                ->reloadNodes($path);
+            if ($items) {
+                $path = $path->getOriginal()
+                    ->concat($items)
+                    ->reloadNodes($path);
 
-            static::$menu->put('path', $path);
+                static::$menu->put('path', $path);
+            }
         }
 
         return $items;
