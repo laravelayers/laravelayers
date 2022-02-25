@@ -146,8 +146,12 @@ class FormSearch {
                                 )
                             );
 
-                            if (_this.text && duplicate === -1) {
-                                _this.text += _this.options.listSeparator + text;
+                            if (_this.text) {
+                                if (duplicate === -1) {
+                                    _this.text += _this.options.listSeparator + text;
+                                }
+                            } else {
+                                _this.text = text;
                             }
 
                             _this.$input.val(_this.text);
