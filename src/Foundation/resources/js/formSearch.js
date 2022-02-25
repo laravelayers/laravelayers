@@ -97,6 +97,20 @@ class FormSearch {
                 : window.location.href;
         }
 
+        let values = value.split(this.options.listSeparator.trim());
+
+        values = values.map(function(item) {
+            return item.trim();
+        });
+
+        if (values.length > 1) {
+            value = values[values.length-1];
+        }
+
+        values.splice(values.length-1);
+
+        this.text = values.join(this.options.listSeparator).trim();
+
         let _this = this;
 
         $.ajax({
@@ -122,7 +136,21 @@ class FormSearch {
                         }
 
                         $(this).on('click', function () {
-                            _this.$input.val($(this).text().trim());
+                            let text = $(this).text().trim();
+
+                            let duplicate = _this.text.search(
+                                new RegExp(
+                                    '(' + _this.options.listSeparator.trim() + ')?[\s]?'
+                                    + text + '[\s]?(' + _this.options.listSeparator.trim() + ')?',
+                                    'i'
+                                )
+                            );
+
+                            if (_this.text && duplicate === -1) {
+                                _this.text += _this.options.listSeparator + text;
+                            }
+
+                            _this.$input.val(_this.text);
                             _this.$wrapper.removeClass('active');
                             _this.$pane.foundation('close');
                         });
@@ -165,6 +193,22 @@ FormSearch.defaults = {
      * @default 'li'
      */
     searchElement: 'li',
+
+    /**
+     * Multiple selection.
+     * @option
+     * @type {boolean}
+     * @default true
+     */
+    multiple: false,
+
+    /**
+     * The separator of the list of selected elements in the text field.
+     * @option
+     * @type {string}
+     * @default ','
+     */
+    listSeparator: '/',
 };
 
 export {FormSearch};
