@@ -44,6 +44,8 @@ class FormSearch {
 
         this.$pane = this.$wrapper.find('.dropdown-pane');
 
+        this.$pane.children().css('margin', '-0.5rem');
+
         this._events();
     }
 
@@ -129,6 +131,8 @@ class FormSearch {
 
                 _this.$pane.prepend(data);
 
+                _this.$pane.children('.menu').css('margin', _this.options.searchPaneMargin);
+
                 if (_this.options.searchElement) {
                     _this.$pane.find(_this.options.searchElement).each(function (index, element) {
                         if (!$(this).find('a').length) {
@@ -213,6 +217,14 @@ FormSearch.defaults = {
      * @default ','
      */
     listSeparator: '/',
+
+    /**
+     * Search pane margin.
+     * @option
+     * @type {string}
+     * @default ','
+     */
+    searchPaneMargin: '-0.5rem',
 };
 
 export {FormSearch};
