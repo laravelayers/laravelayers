@@ -567,7 +567,8 @@ abstract class CollectionDecorator extends BaseCollectionDecorator implements Ac
     {
         return $this->first()
             && !is_null($this->first()->{$this->first()->getSortKey()})
-            && $this->isAction('editMultiple');
+            && $this->isAction('editMultiple')
+            && !$this->getElements()->getRequest()->has(Service::getSortingName());
     }
 
     /**
