@@ -42,6 +42,7 @@ class FormSelect {
         this.$input.removeAttr('name');
 
         this.$container = $('#container_' + this.$input.attr('id'));
+        this.isContainerOpen = false;
 
         this.$wrapper = $('#wrapper_' + this.$input.attr('id'));
         this.$search = $(this.$wrapper).children('input[type="search"]').first();
@@ -230,7 +231,15 @@ class FormSelect {
             _this.$search.val('').trigger('input.foundation.formSelect.search');
         });
 
-        this.$header.children('input').on('click.foundation.formSelect.search', () => {
+        this.$container.on('open.zf.reveal', function(event) {
+            _this.isContainerOpen = true;
+        });
+
+        this.$header.children('input').on('click.foundation.formSelect.search', (event) => {
+            if (this.$input.attr('readonly')) {
+                return false;
+            }
+
             if (this.options.multiple) {
                 _this._selectAll();
             }
@@ -253,7 +262,7 @@ class FormSelect {
         });
 
         this.$input.on('mousedown.foundation.formSelect.button', (event) => {
-            if(event.button == 2) {
+            if(event.button === 2) {
                 _this.$input.select();
             }
         }).on('input.foundation.formSelect.button', () => {
@@ -348,10 +357,18 @@ class FormSelect {
         }
 
         $input.on('click.foundation.formSelect.checkbox', () => {
+            if (_this.$input.attr('readonly') && _this.isContainerOpen) {
+                event.stopPropagation();
+            }
+
             $input.prop('checked', !$input.is(":checked"));
         });
 
         $label.on('click.foundation.formSelect.label', (event) => {
+            if (_this.$input.attr('readonly') && _this.isContainerOpen) {
+                event.stopPropagation();
+            }
+
             if ($(element).hasClass('is-subtree-parent') && _this.options.multiple) {
                 var $visibleChildren = $children.not(':hidden').not('.is-disabled');
                 var $childrenInput = $visibleChildren.find('input').not(':hidden');
@@ -369,6 +386,10 @@ class FormSelect {
         });
 
         $link.on('click.foundation.formSelect.element', () => {
+            if (_this.$input.attr('readonly') && _this.isContainerOpen) {
+                return false;
+            }
+
             if (!_this.options.multiple) {
                 _this.$list.find('li').filter('.active').removeClass('active');
             }
