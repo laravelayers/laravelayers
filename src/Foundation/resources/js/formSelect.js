@@ -358,7 +358,7 @@ class FormSelect {
 
         $input.on('click.foundation.formSelect.checkbox', () => {
             if (_this.$input.attr('readonly') && _this.isContainerOpen) {
-                event.stopPropagation();
+                return false;
             }
 
             $input.prop('checked', !$input.is(":checked"));
@@ -366,7 +366,7 @@ class FormSelect {
 
         $label.on('click.foundation.formSelect.label', (event) => {
             if (_this.$input.attr('readonly') && _this.isContainerOpen) {
-                event.stopPropagation();
+                return false;
             }
 
             if ($(element).hasClass('is-subtree-parent') && _this.options.multiple) {
