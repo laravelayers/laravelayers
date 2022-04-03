@@ -268,7 +268,11 @@ class Repository
      */
     public function exists()
     {
-        return $this->model->exists();
+        $result = $this->model->exists();
+
+        $this->model = $this->model->getModel();
+
+        return $result;
     }
 
     /**
@@ -278,7 +282,11 @@ class Repository
      */
     public function doesntExist()
     {
-        return $this->model->doesntExist();
+        $result = $this->model->doesntExist();
+
+        $this->model = $this->model->getModel();
+
+        return $result;
     }
 
     /**
@@ -288,7 +296,11 @@ class Repository
      */
     public function count()
     {
-        return $this->model->count();
+        $result = $this->model->count();
+
+        $this->model = $this->model->getModel();
+
+        return $result;
     }
 
     /**
