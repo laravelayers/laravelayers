@@ -77,6 +77,8 @@ trait PaginateManually
      */
     public function scopeDistinctPaginateManually($query, $perPage = 15, $columnsOrKey = ['*'], $pageName = 'page', $page = null)
     {
+        $page = $page ?: Paginator::resolveCurrentPage($pageName);
+
         $key = $this->getQualifiedKeyName();
         $columns = $columnsOrKey;
 
@@ -90,8 +92,6 @@ trait PaginateManually
 
         $newQuery = (clone $query);
         $newQuery->getQuery()->groups = null;
-
-        $page = $page ?: Paginator::resolveCurrentPage($pageName);
 
         return new Paginator(
             $query->forPage($page, $perPage)->get($columns),
