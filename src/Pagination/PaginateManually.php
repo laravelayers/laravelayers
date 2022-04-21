@@ -91,11 +91,13 @@ trait PaginateManually
         $newQuery = (clone $query);
         $newQuery->getQuery()->groups = null;
 
+        $page = $page ?: Paginator::resolveCurrentPage($pageName);
+
         return new Paginator(
             $query->forPage($page, $perPage)->get($columns),
             $newQuery->distinct()->count($key),
             $perPage,
-            $page ?: Paginator::resolveCurrentPage($pageName),
+            $page,
             static::initOptionsForPaginateManually()
         );
     }
