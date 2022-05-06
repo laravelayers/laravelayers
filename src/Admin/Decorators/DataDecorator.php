@@ -259,6 +259,7 @@ trait DataDecorator
                     'name' => $createdAt,
                     'value' => $value,
                     'label' => static::transOfElement('created_at_label'),
+                    'line' => 'created',
                     'required' => '',
                     'disabled' => '',
                     'hidden' => $this->isAction('create')
@@ -281,6 +282,7 @@ trait DataDecorator
                     'name' => $updatedAt,
                     'value' => $value,
                     'label' => static::transOfElement('updated_at_label'),
+                    'line' => 'created',
                     'required' => '',
                     'disabled' => '',
                     'hidden' => $this->isAction('create')
