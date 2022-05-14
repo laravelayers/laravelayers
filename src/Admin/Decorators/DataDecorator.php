@@ -630,6 +630,19 @@ trait DataDecorator
                     $this->{$setter}($value);
                 } else {
                     $this->put($elementKey, $value);
+
+                    if (!is_null($element->getAttributes('required')) && !$value) {
+                        $this->getElements()->setError($elementKey, trans('validation.required', [
+                            'attribute' => $element->getLabel()
+                                ?: $element->getGroup() ?: ($element->getAttributes('placeholder') ?: $element->get('name'))
+                        ]));
+
+                        $this->getElements()->validate();
+                    }
+
+                    if (!is_iterable($element->value)) {
+                        $element->put('value', $value);
+                    }
                 }
             }
         }
