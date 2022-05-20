@@ -325,7 +325,7 @@ trait Actions
                 ];
             }
 
-            if ($checkbox = $this->initActionCheckbox()) {
+            if ($checkbox = $this->initActionCheckbox() && $data) {
                 $actions['checkbox'] = $checkbox;
             }
         }
