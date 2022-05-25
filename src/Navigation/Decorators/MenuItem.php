@@ -322,4 +322,18 @@ trait MenuItem
     {
         return $this->getOriginal()->getTreeMethod($name);
     }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        if ($this->getOriginal()) {
+            $this->setVisibleProperties('menu');
+        }
+
+        return parent::toArray();
+    }
 }
