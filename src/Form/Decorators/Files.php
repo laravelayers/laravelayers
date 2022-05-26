@@ -99,7 +99,7 @@ trait Files
         }
 
         if (($multiple && !$uploaded) || (!$multiple && ($uploaded || !$files))) {
-            foreach ($this->getStoredfiles($disk, $path) as $key => $file) {
+            foreach ($this->getStoredfiles($disk, $path, $prefix) as $key => $file) {
                 $name = basename($file);
 
                 if ($this->getUploadedFiles()->where('file', $name)->isEmpty()) {
