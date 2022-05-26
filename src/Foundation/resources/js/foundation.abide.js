@@ -186,14 +186,18 @@ import validator from 'validator';
             return true;
         }
 
-        $init.options.min = $init.options.min || 0;
-        $init.options.max = $init.options.max || 999;
+        $init.options.min = Number($init.options.min || 0);
 
         if (Number($el.val()) < $init.options.min) {
             $el.val($init.options.min);
         }
-        if (Number($el.val()) > $init.options.max) {
-            $el.val($init.options.max);
+
+        if ($init.options.max !== undefined) {
+            $init.options.max =  Number($init.options.max);
+
+            if (Number($el.val()) > $init.options.max) {
+                $el.val($init.options.max);
+            }
         }
 
         return (validator['isInt']($el.val(), $init.options));
