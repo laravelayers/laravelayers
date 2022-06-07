@@ -28,11 +28,13 @@ trait PaginateManually
      */
     public function scopePaginateManually($query, $perPage = 15, $columns = ['*'], $pageName = 'page', $page = null)
     {
+        $perPage = $perPage ?: $this->perPage;
+
         if ($query->getQuery()->groups || $query->getQuery()->distinct) {
             return $query->DistinctPaginateManually($perPage, $columns, $pageName, $page);
         }
 
-        $result = $query->paginate($perPage ?: $this->perPage, $columns, $pageName, $page);
+        $result = $query->paginate($perPage, $columns, $pageName, $page);
 
         return new Paginator(
             $result->getCollection(),
@@ -77,29 +79,53 @@ trait PaginateManually
      */
     public function scopeDistinctPaginateManually($query, $perPage = 15, $columnsOrKey = ['*'], $pageName = 'page', $page = null)
     {
-        $page = $page ?: Paginator::resolveCurrentPage($pageName);
+        if ($query->getQuery()->groups || $query->getQuery()->distinct) {
+            $page = $page ?: Paginator::resolveCurrentPage($pageName);
 
-        $key = $this->getQualifiedKeyName();
-        $columns = $columnsOrKey;
+            $key = $this->getQualifiedKeyName();
+            $columns = $columnsOrKey;
 
-        if (!is_array($columnsOrKey)) {
-            $columns = ['*'];
+            if (!is_array($columnsOrKey)) {
+                $columns = ['*'];
 
-            if ($columnsOrKey) {
-                $key = $columnsOrKey;
+                if ($columnsOrKey) {
+                    $key = $columnsOrKey;
+                }
             }
+
+            return new Paginator(
+                $query->forPage($page, $perPage)->get($columns),
+                $query->distinctCount($key),
+                $perPage,
+                $page,
+                static::initOptionsForPaginateManually()
+            );
         }
 
-        $newQuery = (clone $query);
-        $newQuery->getQuery()->groups = null;
+        return $query->PaginateManually($query, $perPage, $columnsOrKey, $pageName, $page);
+    }
 
-        return new Paginator(
-            $query->forPage($page, $perPage)->get($columns),
-            $newQuery->distinct()->count($key),
-            $perPage,
-            $page,
-            static::initOptionsForPaginateManually()
-        );
+    /**
+     * Retrieve the "count" result of the given query that uses "group by" or "distinct".
+     *
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param string $columns
+     * @return int
+     */
+    public function scopeDistinctCount($query, $columns = '*')
+    {
+        if ($query->getQuery()->groups || $query->getQuery()->distinct) {
+            if (!$columns || $columns == '*') {
+                $columns = $this->getQualifiedKeyName();
+            }
+
+            $newQuery = (clone $query);
+            $newQuery->getQuery()->groups = null;
+
+            return $newQuery->distinct()->count($columns ?: '*');
+        }
+
+        return $query->count($columns);
     }
 
     /**

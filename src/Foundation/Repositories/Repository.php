@@ -292,11 +292,12 @@ class Repository
     /**
      * Retrieve the "count" result of the query.
      *
+     * @param  string  $columns
      * @return int
      */
-    public function count()
+    public function count($columns = '*')
     {
-        $result = $this->model->count();
+        $result = $this->model->distinctCount($columns);
 
         $this->model = $this->model->getModel();
 

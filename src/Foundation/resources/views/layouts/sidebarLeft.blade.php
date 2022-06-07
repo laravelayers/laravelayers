@@ -1,5 +1,5 @@
-<div class="large-shrink cell sidebar-left {{ !e($slot) ? 'show-for-large' : '' }}" id="sidebar_left" data-sticky-container>
-    <div>
+<div class="large-shrink cell sidebar-left {{ !e($slot) ? 'show-for-large' : '' }}" id="sidebar_left">
+    <div data-sticky-container>
 
         {{ $slot }}
 
