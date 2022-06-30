@@ -6,7 +6,7 @@ import Quill from 'quill';
 
 /**
  * FormEditor module.
- * @plugin foundation.formText
+ * @plugin foundation.formEditor
  */
 class FormEditor {
     /**

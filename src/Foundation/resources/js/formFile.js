@@ -5,7 +5,7 @@ import Cropper from 'cropperjs/dist/cropper';
 
 /**
  * FormFile plugin.
- * @plugin foundation.formFIle
+ * @plugin foundation.formFile
  */
 class FormFile {
     /**

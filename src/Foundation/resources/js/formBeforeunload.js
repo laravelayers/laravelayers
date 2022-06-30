@@ -4,7 +4,7 @@ import $ from 'jquery';
 
 /**
  * FormBeforeunload module.
- * @module foundation.beforeunload
+ * @module foundation.fomrBeforeunload
  */
 class FormBeforeunload {
     /**

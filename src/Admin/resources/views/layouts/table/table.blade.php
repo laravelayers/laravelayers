@@ -8,7 +8,7 @@
                 <thead>
                 <tr>
 
-                    @if ($items->getActions()->action && $items->getActions()->action->value->isNotEmpty())
+                    @if (($items->getActions()->action && $items->getActions()->action->value->isNotEmpty()) || ($items->first()->getActions()->checkbox && $items->first()->getActions()->checkbox->get('type') == 'checkbox.readonly'))
                         @if ($items->getActions()->checkbox && $item->getActions()->checkbox)
 
                         <th>
@@ -83,7 +83,7 @@
 
                 <tr{!! $items->isSortableRows && !$item->getSorting() ? ' class="ui-sortable-disabled"' : '' !!}>
 
-                    @if ($items->getActions()->action && $items->getActions()->action->value->isNotEmpty())
+                    @if (($items->getActions()->action && $items->getActions()->action->value->isNotEmpty()) || $item->getActions()->checkbox->get('type') == 'checkbox.readonly')
                         @if ($items->getActions()->checkbox && $item->getActions()->checkbox)
 
                         <td>
