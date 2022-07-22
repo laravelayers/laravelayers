@@ -226,7 +226,7 @@ trait Images
                 $size = 'default';
             }
 
-            $image = !empty($this->uploadedImages['extension']) ? $this->uploadedImages['extension'] : $image;
+            $image = !empty($this->uploadedImages['file']) ? basename($this->uploadedImages['file']) : $image;
             $disk = $this->uploadedImages['disk'] ?? $disk;
             $path = $this->uploadedImages['path'] ?? $path;
             $prefix = $this->uploadedImages['prefix'] ?? $prefix;
