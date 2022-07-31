@@ -75,7 +75,9 @@
     {{-- Scripts --}}
     <script src="{{ mix('/js/app.admin.js') }}"></script>
     <script>
-        $(document).foundation();
+        $(function() {
+            $(document).foundation();
+        });
     </script>
 
     @stack('scripts')
