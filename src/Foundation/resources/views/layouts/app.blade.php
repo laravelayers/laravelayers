@@ -97,9 +97,7 @@
     @endcan
 
     <script>
-        $(function() {
-            $(document).foundation();
-        });
+        $(document).foundation();
     </script>
 
     @stack('scripts')
