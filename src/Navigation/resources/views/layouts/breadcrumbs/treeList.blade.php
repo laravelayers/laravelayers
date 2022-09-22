@@ -18,19 +18,39 @@
 
         <script>
 
-            $(function() {
-                $('#breadcrumbs_{{ $tree->last()->nodeId }} > li:last-child')
-                    .detach()
-                    .appendTo('#breadcrumbs_current_{{ $tree->last()->nodeId }}');
-            });
+            ;(function () {
+                function copy_breadcrumbs() {
+                    if ($('#breadcrumbs_{{ $tree->last()->nodeId }}').is(':hidden')) {
+                        $('#breadcrumbs_current_{{ $tree->last()->nodeId }}').removeClass('is-hidden');
 
-            $('#breadcrumbs_{{ $tree->last()->nodeId }}').on('off.zf.toggler', function() {
-                $('#breadcrumbs_current_{{ $tree->last()->nodeId }}')
-                    .addClass('is-hidden')
-                    .children('li:last-child')
-                    .detach()
-                    .appendTo('#breadcrumbs_{{ $tree->last()->nodeId }}');
-            });
+                        if ($('#breadcrumbs_current_{{ $tree->last()->nodeId }} > li').length === 1) {
+                            $('#breadcrumbs_{{ $tree->last()->nodeId }} > li:last-child')
+                                .detach()
+                                .appendTo('#breadcrumbs_current_{{ $tree->last()->nodeId }}');
+                        }
+                    } else {
+                        if ($('#breadcrumbs_current_{{ $tree->last()->nodeId }} > li').length > 1) {
+                            $('#breadcrumbs_current_{{ $tree->last()->nodeId }}')
+                                .addClass('is-hidden')
+                                .children('li:last-child')
+                                .detach()
+                                .appendTo('#breadcrumbs_{{ $tree->last()->nodeId }}');
+                        }
+                    }
+                }
+
+                $(function() {
+                    copy_breadcrumbs();
+                });
+
+                $(window).on('resize', function() {
+                    copy_breadcrumbs();
+                });
+
+                $('#breadcrumbs_{{ $tree->last()->nodeId }}').on('off.zf.toggler', function() {
+                    copy_breadcrumbs();
+                });
+            }());
 
         </script>
 
