@@ -93,9 +93,11 @@ trait PaginateManually
                 }
             }
 
+            $total = $query->distinctCount($key);
+
             return new Paginator(
                 $query->forPage($page, $perPage)->get($columns),
-                $query->distinctCount($key),
+                $total,
                 $perPage,
                 $page,
                 static::initOptionsForPaginateManually()
